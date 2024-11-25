@@ -27,8 +27,8 @@ const Main = () => {
         <main className={styles.main}>
             {news.length > 0 && !loading ? 
             <>
-                {news.length > 0 ? <NewsBanner className={styles.main__banner} item={news[0]} /> : null}
-                {news.length > 0 ? <NewsList news={news} /> : null}
+                <NewsBanner className={styles.main__banner} item={news[0]} />
+                <NewsList news={news} />
             </>
             : <Loading />
             }
