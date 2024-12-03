@@ -55,7 +55,9 @@ function NewsGallery() {
             onTouchEnd={handleTouchEnd}
         >
             <div className={styles.slider__content} style={{transform: `translateX(${offset}rem)`}}>
-                {news.map(elem => <NewsCard key={elem.id} news={elem} />) }
+                {news.length > 0 ?
+                news.map(elem => <NewsCard key={elem.id} news={elem} />) :
+                <NewsCard skeleton />}
             </div>
         </div>
     );

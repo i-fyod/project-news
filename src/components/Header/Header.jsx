@@ -1,6 +1,6 @@
 import { formatDate } from "../../helpers/formatDate";
 import styles from "./Header.module.sass"
-import avatar from "../../assets/images/man_avatar.svg"
+import avatar from "../../assets/icons/man_avatar.svg"
 
 const Header = () => {
     return (
