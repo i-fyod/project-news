@@ -1,0 +1,56 @@
+.card
+    display: grid
+    grid-template-columns: 4rem 1fr 4rem
+    grid-template-rows: 1fr 4rem 4rem
+    grid-template-areas: "img img img" "title title title" "avatar about message"
+    row-gap: 2rem
+    column-gap: 1.5rem
+    width: 25.5rem
+    height: 30rem
+    border-radius: 2rem
+    box-shadow: 0 .3rem 2.4rem 0 rgba(25, 32, 45, 0.05)
+    padding: 1.5rem
+
+    &__image
+        grid-area: img
+        background-color: #83B1FF
+        border-radius: 1rem
+        overflow: hidden
+
+    &__photo
+        height: 100%
+        width: 100%
+        object-fit: cover
+        position: relative
+        left: 50%
+        top: 50%
+        transform: translate(-50%, -50%)
+
+    &__title
+        grid-area: title
+        font-weight: 600
+        font-size: 1.5rem
+        line-height: 2.2rem
+        overflow: hidden
+
+    &__avatar
+        grid-area: avatar
+        border-radius: 100%
+        background-color: #83B1FF
+        overflow: hidden
+
+    &__about
+        grid-area: about
+        align-self: center
+        font-size: 1.2rem
+        height: 3rem
+        overflow: hidden
+    
+    &__author
+        font-weight: 600
+        margin-bottom: .4rem
+        white-space: nowrap
+    
+    &__time
+        color: #9397A0
+        font-weight: 400

@@ -1,13 +1,14 @@
 import Header from "./components/Header/Header"
+import NewsGallery from "./components/NewsGallery/NewsGallery"
 import Main from "./pages/Main/Main"
 
 function App() {
 	return (
 		<>
-			<Header />
 			<div className="container">
-				<Main />
+				<Header />	
 			</div>
+			<NewsGallery />
 		</>
 		
 	)
