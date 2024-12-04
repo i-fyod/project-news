@@ -1,23 +1,59 @@
 .newsItem
     display: grid
-    grid-template-columns: 6.4rem 1fr
-    gap: 1.6rem
-
-    &__description
-        //
+    grid-template-columns: 7rem 1fr
+    grid-template-rows: 60% 1fr
+    grid-template-areas: "img title" "img tags"
+    gap: 1rem
+    height: 9rem
+    background-color: white
+    border-radius: 2rem
+    padding: 1rem
+    cursor: pointer
 
     &__image
-        background-color: #F2F4F5
-        width: 6.4rem
+        grid-area: img
+        height: 7rem
         aspect-ratio: 1 / 1
+        background-color: #83B1FF
+        border-radius: 2.2rem
+        overflow: hidden
+        background: url("../../assets/icons/no_image.svg") center / contain no-repeat
+
+    &__photo
+        height: 101%
+        width: 101%
+        object-fit: cover
+        position: relative
+        left: 50%
+        top: 50%
+        transform: translate(-50%, -50%)
 
     &__title
-        font-size: 1.4rem
-        font-weight: 700
-        margin-bottom: .8rem
+        grid-area: title
+        font-weight: 600
+        font-size: 1.3rem
+        line-height: 2.2rem
+        overflow: hidden
 
-    &__info
-        color: #6C7072
+    &__tags
+        display: flex
+        gap: .5rem
+
+    &__tag
         font-size: 1.2rem
+        color: #9397A0
+
+.skeleton
+    div, h3, ul
+        border-radius: 1rem
+        background: linear-gradient(to right, rgba(130, 130, 130, 0.2) 8%, rgba(130, 130, 130, 0.3) 18%, rgba(130, 130, 130, 0.2) 33%)
+        background-size: 80rem 100rem
+        animation: wave-squares 2s infinite ease-out
+
+@keyframes wave-squares 
+    0% 
+        background-position: -46.8rem 0
     
+    100% 
+        background-position: 46.8rem 0
     

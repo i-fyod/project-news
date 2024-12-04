@@ -1,6 +1,7 @@
 import Header from "./components/Header/Header"
 import NewsGallery from "./components/NewsGallery/NewsGallery"
-import Main from "./pages/Main/Main"
+import NewsList from "./components/NewsList/NewsList"
+import Navigation from "./components/Navigation/Navigation"
 
 function App() {
 	return (
@@ -9,6 +10,10 @@ function App() {
 				<Header />	
 			</div>
 			<NewsGallery />
+			<div className="container">
+				<NewsList />
+			</div>
+			<Navigation />
 		</>
 		
 	)
