@@ -1,20 +1,22 @@
 import styles from "./NewsItem.module.sass";
-import { formatTimeAgo } from "../../helpers/formatTimeAgo";
-import Image from "../Image/Image"
 
-function NewsItem({item}) {
+function NewsItem({news, skeleton=false}) {
     return (
+        skeleton ? 
+        <li className={`${styles.newsItem} ${styles.skeleton}`}>
+            <div className={styles.newsItem__image}></div>
+            <h3 className={styles.newsItem__title}></h3>
+            <ul className={styles.newsItem__tags}></ul>
+        </li>
+        :
         <li className={styles.newsItem}>
             <div className={styles.newsItem__image}>
-                <Image image={item.image} />
+                {news.image !== "None" ? <img src={news.image} alt="" className={styles.newsItem__photo} /> : ""}
             </div>
-            <div className={styles.newsItem__description}>
-                <h3 className={styles.newsItem__title}>{item.title}</h3>
-                <p className={styles.newsItem__info}>
-                    {formatTimeAgo(item.published)} by {item.author}
-                </p>
-            </div> 
-            
+            <h3 className={styles.newsItem__title}>{news.title}</h3>
+            <ul className={styles.newsItem__tags}>
+                {news.category.map(tag => <li key={tag.id} className={styles.newsItem__tag}>{"#" + tag}</li>)}
+            </ul>
         </li>
     )
 }

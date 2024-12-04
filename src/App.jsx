@@ -1,13 +1,19 @@
 import Header from "./components/Header/Header"
-import Main from "./pages/Main/Main"
+import NewsGallery from "./components/NewsGallery/NewsGallery"
+import NewsList from "./components/NewsList/NewsList"
+import Navigation from "./components/Navigation/Navigation"
 
 function App() {
 	return (
 		<>
-			<Header />
 			<div className="container">
-				<Main />
+				<Header />	
 			</div>
+			<NewsGallery />
+			<div className="container">
+				<NewsList />
+			</div>
+			<Navigation />
 		</>
 		
 	)
