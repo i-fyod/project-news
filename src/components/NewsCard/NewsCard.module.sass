@@ -1,21 +1,22 @@
-.newsItem
+.card
     display: grid
-    grid-template-columns: 7rem 1fr
-    grid-template-rows: 60% 1fr
-    grid-template-areas: "img title" "img tags"
-    gap: 1rem
-    height: 9rem
-    background-color: white
+    grid-template-columns: 4rem 1fr 4rem
+    grid-template-rows: 1fr 4rem 4rem
+    grid-template-areas: "img img img" "title title title" "avatar about about"
+    row-gap: 2rem
+    column-gap: 1.5rem
+    width: 25.5rem
+    height: 30rem
     border-radius: 2rem
-    padding: 1rem
+    background-color: #fff
+    box-shadow: 0 .3rem 2.4rem 0 rgba(25, 32, 45, 0.05)
+    padding: 1.5rem
     cursor: pointer
 
     &__image
         grid-area: img
-        height: 7rem
-        aspect-ratio: 1 / 1
         background-color: #83B1FF
-        border-radius: 2.2rem
+        border-radius: 1rem
         overflow: hidden
         background: url("../../assets/icons/no_image.svg") center / contain no-repeat
 
@@ -31,20 +32,32 @@
     &__title
         grid-area: title
         font-weight: 600
-        font-size: 1.3rem
+        font-size: 1.5rem
         line-height: 2.2rem
         overflow: hidden
 
-    &__tags
-        display: flex
-        gap: .5rem
+    &__avatar
+        grid-area: avatar
+        overflow: hidden
 
-    &__tag
+    &__about
+        grid-area: about
+        align-self: center
         font-size: 1.2rem
+        height: 3rem
+        overflow: hidden
+    
+    &__author
+        font-weight: 600
+        margin-bottom: .4rem
+        white-space: nowrap
+    
+    &__time
         color: #9397A0
+        font-weight: 400
 
 .skeleton
-    div, h3, ul
+    div, h3
         border-radius: 1rem
         background: linear-gradient(to right, rgba(130, 130, 130, 0.2) 8%, rgba(130, 130, 130, 0.3) 18%, rgba(130, 130, 130, 0.2) 33%)
         background-size: 80rem 100rem

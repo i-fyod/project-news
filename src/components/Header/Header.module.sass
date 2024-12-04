@@ -1,13 +1,34 @@
 .header
-    display: flex
-    flex-direction: column
-    padding: 1.2rem 2.4rem
-    border-bottom: .1rem solid #F2F4F5
+    padding: 3rem 0
+    display: grid
+    grid-template-columns: 5rem 1fr
+    grid-template-rows: 1fr 1fr
+    column-gap: 1.5rem
+    row-gap: .7rem
+    grid-template-areas: "avatar title" "avatar date"
 
-    &__title
-        font-size: 3.2rem
-        font-weight: 700
-        margin-bottom: 1.2rem
+    &__avatar
+        grid-area: avatar
+        display: flex
+        justify-content: center
+        align-items: center
+        overflow: hidden
+        height: 5rem
+        aspect-ratio: 1 / 1
+        border-radius: 1.2rem
+        background-color: #83B1FF
+
+    &__photo
+        width: 100%
     
-    &__date
+    &__title
+        grid-area: title
         font-size: 1.6rem
+        font-weight: 700
+        align-self: end
+
+    &__date
+        grid-area: date
+        font-size: 1.2rem
+        font-weight: 400
+        color: #9397A0
