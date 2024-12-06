@@ -10,7 +10,7 @@ function NewsGallery() {
 
     const fetchNews = async () => {
         try {
-            const response = await getNews();
+            const response = await getNews({});
             setNews(response.news.slice(0, 5));
         } catch(error) {
             console.log(error)
