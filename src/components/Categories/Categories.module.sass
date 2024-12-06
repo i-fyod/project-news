@@ -1,0 +1,35 @@
+.categories
+    margin-bottom: 2rem
+    height: 1.5rem
+    overflow-x: auto
+    display: flex
+    scrollbar-width: none
+
+    &__item
+        cursor: pointer
+        border: none
+        background-color: transparent
+        font-weight: 500
+        color: #9397A0
+        font-size: 1.2rem
+
+        &_selected
+            color: #5474FD
+            font-weight: 600
+
+.skeleton
+    justify-content: space-between
+    button
+        width: 5rem
+        border-radius: 1rem
+        background: linear-gradient(to right, rgba(130, 130, 130, 0.2) 8%, rgba(130, 130, 130, 0.3) 18%, rgba(130, 130, 130, 0.2) 33%)
+        background-size: 80rem 100rem
+        animation: wave-squares 2s infinite ease-out
+
+@keyframes wave-squares 
+    0% 
+        background-position: -46.8rem 0
+    
+    100% 
+        background-position: 46.8rem 0
+    
