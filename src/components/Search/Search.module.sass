@@ -1,0 +1,62 @@
+@import "../../styles/abstracts/variables"
+	
+.search
+	height: 5rem
+	width: 100%
+	display: flex
+	gap: 1rem
+	flex-direction: row-reverse
+	transition: transform .3s ease
+
+	&__active
+		position: absolute
+		left: 3rem
+		right: 3rem
+		form
+			padding-top: 11rem
+			height: 16rem
+			transform: translateY(-11rem)
+			button
+				transform: translateX(calc(-1 * (100vw - 6rem - 5rem)))
+			
+			input
+				transform: translateX(6rem)
+
+	&__btn
+		height: 100%
+		aspect-ratio: 1 / 1
+		border-radius: 2rem
+		border: none
+		background-color: $accent-color
+		cursor: pointer
+		transition: transform .3s ease
+		
+	&__field
+		height: 100%
+		width: 100%
+		border: none
+		border-radius: 2rem
+		outline: none
+		font-size: 1.2rem
+		padding: 0 1.5rem
+		color: $black-color
+		transition: transform .3s ease
+
+	&__icon
+		height: 2rem
+
+.content
+	padding-bottom: 1rem
+	transform: translateY(-9rem)
+	animation: rightToLeft .4s ease
+	&__categories
+		background-color: green
+
+
+@keyframes rightToLeft
+	0%
+		opacity: 0
+		transform: translate(100vw, -9rem)
+	100%
+		opacity: 1
+		transform: translateX(0, -9rem)

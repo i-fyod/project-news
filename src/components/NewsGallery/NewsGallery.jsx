@@ -3,7 +3,7 @@ import styles from "./NewsGallery.module.sass";
 import NewsCard from "../NewsCard/NewsCard";
 import { getNews } from "../../api/apiNews";
 
-function NewsGallery() {
+function NewsGallery({display}) {
     const [startX, setStartX] = useState(0);
     const [offset, setOffset] = useState(0);
     const [news, setNews] = useState([]);
@@ -12,7 +12,7 @@ function NewsGallery() {
         try {
             const response = await getNews({});
             setNews(response.news.slice(0, 5));
-        } catch(error) {
+        } catch (error) {
             console.log(error)
         }
     };
@@ -50,14 +50,15 @@ function NewsGallery() {
 
     return (
         <div
+            style={{display: display}}
             className={styles.slider}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
         >
-            <div className={styles.slider__content} style={{transform: `translateX(${offset}rem)`}}>
+            <div className={styles.slider__content} style={{ transform: `translateX(${offset}rem)` }}>
                 {news.length > 0 ?
-                news.map(elem => <NewsCard key={elem.id} news={elem} />) :
-                <NewsCard skeleton />}
+                    news.map(elem => <NewsCard key={elem.id} news={elem} />) :
+                    <NewsCard skeleton />}
             </div>
         </div>
     );
