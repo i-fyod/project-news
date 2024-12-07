@@ -106,7 +106,7 @@ function Search({ hideAll, categories }) {
 
     return (
         <search className={focused ? styles.search__active : ""} role="search">
-            <form className={styles.search} action="#">
+            <form className={styles.search} onSubmit={e => {e.preventDefault}} action="#">
                 <button onClick={_ => {setFocused(!focused)
                 } } className={styles.search__btn} type="button">
                     {focused ? icons.after : icons.before}
