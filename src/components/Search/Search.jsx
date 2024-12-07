@@ -57,11 +57,18 @@ function Search({ hideAll, categories }) {
 
     useEffect(_ => {
         if (thisPage === 2 && focused) {
-            fetchNews({
-                page: 2,
-                category: selectedCategory,
-                keywords: debouncedKeywords
-            })
+            const loadNews = async _ => {
+                setLoading(true);
+                await fetchNews({
+                    page: 2,
+                    category: selectedCategory,
+                    keywords: debouncedKeywords
+                });
+                setLoading(false);
+            };
+            if (focused) {
+                loadNews();
+            }
         } else {
             setThisPage(2);
         }
