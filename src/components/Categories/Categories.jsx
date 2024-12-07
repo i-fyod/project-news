@@ -1,8 +1,8 @@
 import styles from "./Categories.module.sass"
 
-function Categories({ categories, selected, skeleton, selectCategory }) {
+function Categories({ categories, selected, toSelect }) {
     return (
-        skeleton ?
+        categories.length <= 0 ?
             <div className={`${styles.categories} ${styles.skeleton}`}>
                 <button className={styles.categories__item}></button>
                 <button className={styles.categories__item}></button>
@@ -11,7 +11,7 @@ function Categories({ categories, selected, skeleton, selectCategory }) {
                 <button className={styles.categories__item}></button>
             </div> :
             <div className={styles.categories}>
-                {categories.map(category => <button key={category} onClick={_ => selectCategory(category)} className={
+                {categories.map(category => <button key={category} onClick={_ => toSelect(category)} className={
                     category === selected ?
                         `${styles.categories__item} ${styles.categories__item_selected}` :
                         styles.categories__item

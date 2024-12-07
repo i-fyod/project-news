@@ -1,35 +1,6 @@
 .newsList
-    &__header
-        display: flex
-        justify-content: space-between
-        margin-bottom: 2rem
-
-    &__title
-        font-weight: 700
-        font-size: 1.7rem
-
-    &__loading
-        width: 2rem
-        aspect-ratio: 1 / 1
-        border-radius: 50%
-        background: radial-gradient(farthest-side, #5474fd 94%, #0000) top / 3.8px 3.8px no-repeat, conic-gradient(#0000 30%, #5474fd)
-        -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 3.8px), #000 0)
-        animation: spinner-c7wet2 1s infinite linear
-        
-
-    &__more
-        color: #5474FD
-        border: none
-        background-color: transparent
-        cursor: pointer
-        font-size: 1.2rem
-        font-weight: 500
 
     &__news
         display: grid
         row-gap: 1rem
         margin-bottom: 2rem
-
-@keyframes spinner-c7wet2
-    100%
-        transform: rotate(1turn)
