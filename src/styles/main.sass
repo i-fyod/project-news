@@ -1,6 +1,7 @@
 @use "./core/normalize"
 @use "./core/reset"
 @use "./core/typography"
+@import "./abstracts/variables"
 
 *
     box-sizing: border-box
@@ -10,8 +11,8 @@ html
     font-size: 62.5%
 
 body
-    background-color: #fafafa
-    height: 100vhd
+    background-color: $bg-color
+    height: 100vh
 
 .container
     padding: 3rem

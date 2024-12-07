@@ -2,15 +2,15 @@ import axios from "axios"
 const BASE_URL = import.meta.env.VITE_NEWS_BASE_API_URL;
 const API_KEY = import.meta.env.VITE_NEWS_API_KEY;
 
-export const getNews = async ({param = "latest-news", pageSize = 0, pageNumber = 1, category}) => {
+export const getNews = async ({param = "latest-news", pageSize = 30, pageNumber = 1, category = "All", keywords=null}) => {
     const params = {
         apiKey: API_KEY,
-    }
-
-    if (param === "search") {
-        params.page_number = pageNumber;
-        params.page_size = pageSize;
-        params.category = category;
+        ...(param === "search" && {
+            page_number: pageNumber,
+            page_size: pageSize,
+            category: category,
+            keywords: keywords
+        }),
     }
 
     try {
