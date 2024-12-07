@@ -2,6 +2,7 @@ import Header from "../components/Header/Header";
 import NewsGallery from "../components/NewsGallery/NewsGallery";
 import NewsList from "../components/NewsList/NewsList";
 import Categories from "../components/Categories/Categories";
+import Search from "../components/Search/Search";
 import styles from "./Main.module.sass";
 import { useEffect, useState } from "react";
 import { getCategories, getNews } from "../api/apiNews";
@@ -14,6 +15,7 @@ function Main() {
     const [loading, setLoading] = useState(false) // Состояние загрузки новостей
     const [categories, setCategories] = useState([]); // Категории, полученные от api
     const [selectedCategory, setSelectedCategory] = useState("All"); // Выбранная категория
+    const [searchIsActive, setSearchActive] = useState(false)
 
     const fetchNews = async (pageNumber, category) => {
         try {
@@ -63,20 +65,25 @@ function Main() {
         fetchCategories();
     }, [])
 
-	return (
+	return ( 
 		<>
 			<div className="container">
-				<Header />	
+				{searchIsActive ? "" : <Header />}
+                <Search hideAll={setSearchActive} categories={categories}/>
 			</div>
-			<NewsGallery />
-			<div className={`container ${styles.sectionForYou}`}>
-                <div className={styles.sectionForYou__header}>
-                    <h2 className={styles.sectionForYou__title}>News For You</h2>
-                    {news.length > 0 ? <button onClick={_ => setVisible(visible === 1 ? numberVisibleNews : 1)} className={styles.sectionForYou__more}>{visible === 1 ? "View All" : "Hide"}</button> : <div className={styles.sectionForYou__loading}></div>}
-                </div>
-                <Categories categories={categories} selected={selectedCategory} toSelect={setSelectedCategory}/>
-				<NewsList news={news} visible={visible} numberVisibleNews={numberVisibleNews} toPage={goToPage} thisPage={thisPage} loading={loading}/>
-			</div>
+            <NewsGallery display={searchIsActive ? "none" : "block"} />
+            {!searchIsActive ?
+                <div className={`container ${styles.sectionForYou}`}>
+                    <div className={styles.sectionForYou__header}>
+                        <h2 className={styles.sectionForYou__title}>News For You</h2>
+                        {news.length > 0 ? <button onClick={_ => setVisible(visible === 1 ? numberVisibleNews : 1)} className={styles.sectionForYou__more}>{visible === 1 ? "View All" : "Hide"}</button> : <div className={styles.sectionForYou__loading}></div>}
+                    </div>
+                    <Categories categories={categories} selected={selectedCategory} toSelect={setSelectedCategory}/>
+                    <NewsList news={news} visible={visible} numberVisibleNews={numberVisibleNews} toPage={goToPage} thisPage={thisPage} loading={loading}/>
+                </div> :
+                ""
+            }
+			
 		</>
 		
 	)

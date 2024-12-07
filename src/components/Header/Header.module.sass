@@ -1,3 +1,5 @@
+@import "../../styles/abstracts/variables"
+    
 .header
     padding: 3rem 0
     display: grid
@@ -16,7 +18,7 @@
         height: 5rem
         aspect-ratio: 1 / 1
         border-radius: 1.2rem
-        background-color: #83B1FF
+        background-color: $lightBlue-color
 
     &__photo
         width: 100%
@@ -26,9 +28,10 @@
         font-size: 1.6rem
         font-weight: 700
         align-self: end
+        color: $black-color
 
     &__date
         grid-area: date
         font-size: 1.2rem
         font-weight: 400
-        color: #9397A0
+        color: $gray-color

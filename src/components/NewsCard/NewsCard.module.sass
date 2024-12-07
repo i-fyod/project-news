@@ -1,3 +1,5 @@
+@import "../../styles/abstracts/variables"
+    
 .card
     display: grid
     grid-template-columns: 4rem 1fr 4rem
@@ -15,7 +17,7 @@
 
     &__image
         grid-area: img
-        background-color: #83B1FF
+        background-color: $lightBlue-color
         border-radius: 1rem
         overflow: hidden
         background: url("../../assets/icons/no_image.svg") center / contain no-repeat
@@ -53,7 +55,7 @@
         white-space: nowrap
     
     &__time
-        color: #9397A0
+        color: $gray-color
         font-weight: 400
 
 .skeleton
