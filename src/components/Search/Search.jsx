@@ -6,6 +6,7 @@ import Categories from "../Categories/Categories";
 import NewsList from "../NewsList/NewsList";
 
 function Search({ hideAll, categories }) {
+    const numberVisibleNews = 50; // Макс. кол-во новостей в выдаче
     const [focused, setFocused] = useState(false); // Фокус на поиске
     const [keywords, setKeywords] = useState(""); // Ключевые слова из поиска
     const [news, setNews] = useState([]); // Новости из api
@@ -20,13 +21,13 @@ function Search({ hideAll, categories }) {
         try {
             const response = await getNews({
                 param: "search",
-                pageSize: 50,
+                pageSize: numberVisibleNews,
                 pageNumber: page,
                 category: category,
                 keywords: keywords
             });
             await setNews(response.news);
-            setPaginationDisplay(50);
+            setPaginationDisplay(numberVisibleNews);
         } catch (error) {
             console.log(error);
         }
@@ -116,7 +117,7 @@ function Search({ hideAll, categories }) {
             {focused ?
                 <div className={styles.content}>
                     <Categories categories={categories} selected={selectedCategory} toSelect={setSelectedCategory} />
-                    {debouncedKeywords ? <NewsList news={news} loading={loading} toPage={goToPage} thisPage={thisPage} visible={displayPagination} numberVisibleNews={50}/> : ""}
+                    {debouncedKeywords ? <NewsList news={news} loading={loading} toPage={goToPage} thisPage={thisPage} visible={displayPagination} numberVisibleNews={numberVisibleNews}/> : ""}
                 </div> :
                 ""}
 

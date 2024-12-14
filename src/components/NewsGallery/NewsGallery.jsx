@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { CARDCOUNT, SWIPELENGTH } from "../../constants/constants";
 import styles from "./NewsGallery.module.sass";
 import NewsCard from "../NewsCard/NewsCard";
 import { getNews } from "../../api/apiNews";
@@ -11,7 +12,7 @@ function NewsGallery({display}) {
     const fetchNews = async () => {
         try {
             const response = await getNews({});
-            setNews(response.news.slice(0, 5));
+            setNews(response.news.slice(0, CARDCOUNT));
         } catch (error) {
             console.log(error)
         }
@@ -39,11 +40,11 @@ function NewsGallery({display}) {
     const moveSlider = (length) => {
         let move = 0;
         if (length > 0) {
-            move = offset + (27.5 * Math.ceil(length / 200));
+            move = offset + (SWIPELENGTH * Math.ceil(length / 200));
         } else if (length < 0) {
-            move = offset - (27.5 * Math.ceil(length * -1 / 200));
+            move = offset - (SWIPELENGTH * Math.ceil(length * -1 / 200));
         }
-        if (-1 * 27.5 * (news.length - 1) <= move && move <= 0) {
+        if (-1 * SWIPELENGTH * (news.length - 1) <= move && move <= 0) {
             setOffset(move)
         }
     }

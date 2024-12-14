@@ -15,7 +15,7 @@ function Main() {
     const [loading, setLoading] = useState(false) // Состояние загрузки новостей
     const [categories, setCategories] = useState([]); // Категории, полученные от api
     const [selectedCategory, setSelectedCategory] = useState("All"); // Выбранная категория
-    const [searchIsActive, setSearchActive] = useState(false)
+    const [searchIsActive, setSearchActive] = useState(false) // Состояние панели поиска
 
     const fetchNews = async (pageNumber, category) => {
         try {
