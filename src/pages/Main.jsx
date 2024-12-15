@@ -9,22 +9,28 @@ import { getCategories, getNews } from "../api/apiNews";
 
 function Main() {
     const numberVisibleNews = 30; // Макс. кол-во новостей на 1 странице
+    const [filters, setFilters] = useState({
+        param: "search",
+        pageSize: numberVisibleNews,
+        pageNumber: 2,
+        category: "All"
+    });
+
+    const changeFilter = (key, value) => {
+        setFilters(prev => {
+            return {...prev, [key]: value}
+        })
+    }
+
     const [news, setNews] = useState([]); // Новости из api
     const [visible, setVisible] = useState(1); // Кол-во отображаемых новостей в NewsList
-    const [thisPage, setPage] = useState(2); // Текущая страница новостей
     const [loading, setLoading] = useState(false) // Состояние загрузки новостей
     const [categories, setCategories] = useState([]); // Категории, полученные от api
-    const [selectedCategory, setSelectedCategory] = useState("All"); // Выбранная категория
     const [searchIsActive, setSearchActive] = useState(false) // Состояние панели поиска
 
-    const fetchNews = async (pageNumber, category) => {
+    const fetchNews = async _ => {
         try {
-            const response = await getNews({
-                param: "search",
-                pageSize: numberVisibleNews,
-                pageNumber: pageNumber,
-                category: category
-            });
+            const response = await getNews(filters);
             setNews(response.news);
         } catch(error) {
             console.log(error);
@@ -43,18 +49,14 @@ function Main() {
     useEffect(_ => {
         const loadNews = async _ => {
             setLoading(true);
-            await fetchNews(thisPage, selectedCategory);
+            await fetchNews();
             setLoading(false);
         };
         loadNews();
-    }, [thisPage, selectedCategory])
+    }, [filters])
 
-    useEffect(_ => {
-        setPage(2);
-    }, [selectedCategory])
-
-    const goToPage = pageNumber => {
-        setPage(pageNumber);
+    const goToPage = page => {
+        changeFilter("pageNumber", page)
         window.scrollTo({
             top: 470,
             behavior: 'smooth'
@@ -78,8 +80,11 @@ function Main() {
                         <h2 className={styles.sectionForYou__title}>News For You</h2>
                         {news.length > 0 ? <button onClick={_ => setVisible(visible === 1 ? numberVisibleNews : 1)} className={styles.sectionForYou__more}>{visible === 1 ? "View All" : "Hide"}</button> : <div className={styles.sectionForYou__loading}></div>}
                     </div>
-                    <Categories categories={categories} selected={selectedCategory} toSelect={setSelectedCategory}/>
-                    <NewsList news={news} visible={visible} numberVisibleNews={numberVisibleNews} toPage={goToPage} thisPage={thisPage} loading={loading}/>
+                    <Categories categories={categories} selected={filters.category} toSelect={name => {
+                        changeFilter("category", name);
+                        changeFilter("pageNumber", 2);    
+                    }}/>
+                    <NewsList news={news} visible={visible} numberVisibleNews={numberVisibleNews} toPage={goToPage} thisPage={filters.pageNumber} loading={loading}/>
                 </div> :
                 ""
             }
