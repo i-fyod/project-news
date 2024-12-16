@@ -6,34 +6,41 @@ import Categories from "../Categories/Categories";
 import NewsList from "../NewsList/NewsList";
 
 function Search({ hideAll, categories }) {
+    const numberVisibleNews = 50; // Макс. кол-во новостей в выдаче
+    const [filters, setFilters] = useState({
+        param: "search",
+        pageSize: numberVisibleNews,
+        pageNumber: 2,
+        category: "All"
+    });
+
+    const changeFilter = (key, value) => {
+        setFilters(prev => {
+            return {...prev, [key]: value}
+        })
+    }
+    
     const [focused, setFocused] = useState(false); // Фокус на поиске
     const [keywords, setKeywords] = useState(""); // Ключевые слова из поиска
     const [news, setNews] = useState([]); // Новости из api
-    const [selectedCategory, setSelectedCategory] = useState("All"); // Выбранная категория
-    const [thisPage, setThisPage] = useState(2); // Текущая страница в поиске
-    const [displayPagination, setPaginationDisplay] = useState(0); // Отображение пагинации
     const [loading, setLoading] = useState(false) // Состояние загрузки новостей
     const inputRef = useRef(null);
     const debouncedKeywords = useDebounce(keywords, 1000);
 
-    const fetchNews = async ({page, category, keywords}) => {
+    const fetchNews = async (keywords) => {
         try {
             const response = await getNews({
-                param: "search",
-                pageSize: 50,
-                pageNumber: page,
-                category: category,
+                ...filters,
                 keywords: keywords
             });
             await setNews(response.news);
-            setPaginationDisplay(50);
         } catch (error) {
             console.log(error);
         }
     };
 
-    const goToPage = pageNumber => {
-        setThisPage(pageNumber);
+    const goToPage = page => {
+        changeFilter("pageNumber", page);
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
@@ -43,36 +50,26 @@ function Search({ hideAll, categories }) {
     useEffect(_ => {
         const loadNews = async _ => {
             setLoading(true);
-            await fetchNews({
-                page: thisPage,
-                category: selectedCategory,
-                keywords: debouncedKeywords
-            });
+            await fetchNews(debouncedKeywords);
             setLoading(false);
         };
         if (focused) {
             loadNews();
         }
-    }, [thisPage])
+    }, [filters.pageNumber])
 
     useEffect(_ => {
-        if (thisPage === 2 && focused) {
+        if (filters.pageNumber === 2 && focused && debouncedKeywords) {
             const loadNews = async _ => {
                 setLoading(true);
-                await fetchNews({
-                    page: 2,
-                    category: selectedCategory,
-                    keywords: debouncedKeywords
-                });
+                await fetchNews(debouncedKeywords);
                 setLoading(false);
             };
-            if (focused) {
-                loadNews();
-            }
+            loadNews();
         } else {
-            setThisPage(2);
+            changeFilter("pageNumber", 2);
         }
-    }, [selectedCategory, debouncedKeywords])
+    }, [filters.category, debouncedKeywords])
 
     useEffect(_ => {
         if (focused) {
@@ -82,7 +79,7 @@ function Search({ hideAll, categories }) {
             hideAll(false);
             setKeywords("");
             setNews([]);
-            setPaginationDisplay(0);
+            filters.category = "All";
         }
     }, [focused])
 
@@ -115,8 +112,8 @@ function Search({ hideAll, categories }) {
             </form>
             {focused ?
                 <div className={styles.content}>
-                    <Categories categories={categories} selected={selectedCategory} toSelect={setSelectedCategory} />
-                    {debouncedKeywords ? <NewsList news={news} loading={loading} toPage={goToPage} thisPage={thisPage} visible={displayPagination} numberVisibleNews={50}/> : ""}
+                    <Categories categories={categories} selected={filters.category} toSelect={category => changeFilter("category", category)} />
+                    {debouncedKeywords ? <NewsList news={news} loading={loading} toPage={goToPage} thisPage={filters.pageNumber} visible={50} /> : ""}
                 </div> :
                 ""}
 

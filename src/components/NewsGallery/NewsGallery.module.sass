@@ -1,9 +1,14 @@
+$card-count: 10
+$card-width: 27rem
+$padding: calc((100vw - $card-width) / 2)
+$gap: 2rem
+
 .slider
     overflow: hidden
     // scrollbar-width: none
     &__content
         display: flex
         gap: 2rem
-        padding: 0 calc((100vw - 25.5rem) / 2)
-        width: calc((25.5rem) * 5 + (calc((100vw - 25.5rem) / 2) + 2rem) * 4)
+        padding: 0 $padding
+        width: calc($card-width * $card-count + $gap * ($card-count - 1) + $padding * 2)
         transition: all .45s ease-in-out

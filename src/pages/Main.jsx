@@ -4,82 +4,62 @@ import NewsList from "../components/NewsList/NewsList";
 import Categories from "../components/Categories/Categories";
 import Search from "../components/Search/Search";
 import styles from "./Main.module.sass";
-import { useEffect, useState } from "react";
 import { getCategories, getNews } from "../api/apiNews";
+import { useState } from "react";
+import { useFetch } from "../helpers/hooks/useFetch";
 
 function Main() {
     const numberVisibleNews = 30; // Макс. кол-во новостей на 1 странице
-    const [news, setNews] = useState([]); // Новости из api
-    const [visible, setVisible] = useState(1); // Кол-во отображаемых новостей в NewsList
-    const [thisPage, setPage] = useState(2); // Текущая страница новостей
-    const [loading, setLoading] = useState(false) // Состояние загрузки новостей
-    const [categories, setCategories] = useState([]); // Категории, полученные от api
-    const [selectedCategory, setSelectedCategory] = useState("All"); // Выбранная категория
-    const [searchIsActive, setSearchActive] = useState(false)
+    const [filters, setFilters] = useState({
+        param: "search",
+        pageSize: numberVisibleNews,
+        pageNumber: 2,
+        category: "All"
+    });
 
-    const fetchNews = async (pageNumber, category) => {
-        try {
-            const response = await getNews({
-                param: "search",
-                pageSize: numberVisibleNews,
-                pageNumber: pageNumber,
-                category: category
-            });
-            setNews(response.news);
-        } catch(error) {
-            console.log(error);
-        }
-    };
-
-    const fetchCategories = async _ => {
-        try {
-            const response = await getCategories();
-            setCategories(["All", ...response.categories]);
-        } catch(error) {
-            console.log(error);
-        }
+    const changeFilter = (key, value) => {
+        setFilters(prev => {
+            return {...prev, [key]: value}
+        })
     }
 
-    useEffect(_ => {
-        const loadNews = async _ => {
-            setLoading(true);
-            await fetchNews(thisPage, selectedCategory);
-            setLoading(false);
-        };
-        loadNews();
-    }, [thisPage, selectedCategory])
+    const [visible, setVisible] = useState(1); // Кол-во отображаемых новостей в NewsList
+    const [searchIsActive, setSearchActive] = useState(false) // Состояние панели поиска
 
-    useEffect(_ => {
-        setPage(2);
-    }, [selectedCategory])
+    // Реализовать error
+    const { data, isLoading} = useFetch(getNews, filters);
+    const { data: dataLatest} = useFetch(getNews, {});
+    const { data: dataCategories} = useFetch(getCategories);
 
-    const goToPage = pageNumber => {
-        setPage(pageNumber);
+    const goToPage = page => {
+        changeFilter("pageNumber", page)
         window.scrollTo({
             top: 470,
             behavior: 'smooth'
         });
     } 
 
-    useEffect(_ => {
-        fetchCategories();
-    }, [])
-
 	return ( 
 		<>
 			<div className="container">
 				{searchIsActive ? "" : <Header />}
-                <Search hideAll={setSearchActive} categories={categories}/>
+                <Search hideAll={setSearchActive} categories={dataCategories && dataCategories.categories ? ["All", ...dataCategories.categories] : ""}/>
 			</div>
-            <NewsGallery display={searchIsActive ? "none" : "block"} />
+            <NewsGallery news={dataLatest ? dataLatest.news : []} display={searchIsActive ? "none" : "block"} />
             {!searchIsActive ?
                 <div className={`container ${styles.sectionForYou}`}>
                     <div className={styles.sectionForYou__header}>
                         <h2 className={styles.sectionForYou__title}>News For You</h2>
-                        {news.length > 0 ? <button onClick={_ => setVisible(visible === 1 ? numberVisibleNews : 1)} className={styles.sectionForYou__more}>{visible === 1 ? "View All" : "Hide"}</button> : <div className={styles.sectionForYou__loading}></div>}
+                        {data && data.news.length > 0 ? <button onClick={_ => setVisible(visible === 1 ? numberVisibleNews : 1)} className={styles.sectionForYou__more}>{visible === 1 ? "View All" : "Hide"}</button> : <div className={styles.sectionForYou__loading}></div>}
                     </div>
-                    <Categories categories={categories} selected={selectedCategory} toSelect={setSelectedCategory}/>
-                    <NewsList news={news} visible={visible} numberVisibleNews={numberVisibleNews} toPage={goToPage} thisPage={thisPage} loading={loading}/>
+                    {dataCategories && data && data.news ? 
+                    <Categories categories={["All", ...dataCategories.categories]} selected={filters.category} toSelect={name => {
+                        changeFilter("category", name);
+                        changeFilter("pageNumber", 2);    
+                    }}/> :
+                    ""}
+                    {data && data.news ? 
+                    <NewsList news={data.news} visible={visible} toPage={goToPage} thisPage={filters.pageNumber} loading={isLoading} /> : ""}
                 </div> :
                 ""
             }
