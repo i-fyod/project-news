@@ -23,7 +23,6 @@ function Search({ hideAll, categories }) {
     const [focused, setFocused] = useState(false); // Фокус на поиске
     const [keywords, setKeywords] = useState(""); // Ключевые слова из поиска
     const [news, setNews] = useState([]); // Новости из api
-    const [displayPagination, setPaginationDisplay] = useState(0); // Отображение пагинации
     const [loading, setLoading] = useState(false) // Состояние загрузки новостей
     const inputRef = useRef(null);
     const debouncedKeywords = useDebounce(keywords, 1000);
@@ -35,7 +34,6 @@ function Search({ hideAll, categories }) {
                 keywords: keywords
             });
             await setNews(response.news);
-            setPaginationDisplay(numberVisibleNews);
         } catch (error) {
             console.log(error);
         }
@@ -61,15 +59,13 @@ function Search({ hideAll, categories }) {
     }, [filters.pageNumber])
 
     useEffect(_ => {
-        if (filters.pageNumber === 2 && focused) {
+        if (filters.pageNumber === 2 && focused && debouncedKeywords) {
             const loadNews = async _ => {
                 setLoading(true);
                 await fetchNews(debouncedKeywords);
                 setLoading(false);
             };
-            if (focused) {
-                loadNews();
-            }
+            loadNews();
         } else {
             changeFilter("pageNumber", 2);
         }
@@ -83,7 +79,7 @@ function Search({ hideAll, categories }) {
             hideAll(false);
             setKeywords("");
             setNews([]);
-            setPaginationDisplay(0);
+            filters.category = "All";
         }
     }, [focused])
 
@@ -117,7 +113,7 @@ function Search({ hideAll, categories }) {
             {focused ?
                 <div className={styles.content}>
                     <Categories categories={categories} selected={filters.category} toSelect={category => changeFilter("category", category)} />
-                    {debouncedKeywords ? <NewsList news={news} loading={loading} toPage={goToPage} thisPage={filters.pageNumber} visible={displayPagination} numberVisibleNews={numberVisibleNews}/> : ""}
+                    {debouncedKeywords ? <NewsList news={news} loading={loading} toPage={goToPage} thisPage={filters.pageNumber} visible={50} /> : ""}
                 </div> :
                 ""}
 

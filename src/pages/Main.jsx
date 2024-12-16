@@ -59,7 +59,7 @@ function Main() {
                     }}/> :
                     ""}
                     {data && data.news ? 
-                    <NewsList news={data.news} visible={visible} numberVisibleNews={numberVisibleNews} toPage={goToPage} thisPage={filters.pageNumber} loading={isLoading}/> : ""}
+                    <NewsList news={data.news} visible={visible} toPage={goToPage} thisPage={filters.pageNumber} loading={isLoading} /> : ""}
                 </div> :
                 ""
             }
