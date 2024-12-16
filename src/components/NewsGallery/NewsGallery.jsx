@@ -1,26 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { CARDCOUNT, SWIPELENGTH } from "../../constants/constants";
 import styles from "./NewsGallery.module.sass";
 import NewsCard from "../NewsCard/NewsCard";
-import { getNews } from "../../api/apiNews";
 
-function NewsGallery({display}) {
+function NewsGallery({news, display}) {
     const [startX, setStartX] = useState(0);
     const [offset, setOffset] = useState(0);
-    const [news, setNews] = useState([]);
-
-    const fetchNews = async () => {
-        try {
-            const response = await getNews({});
-            setNews(response.news.slice(0, CARDCOUNT));
-        } catch (error) {
-            console.log(error)
-        }
-    };
-
-    useEffect(_ => {
-        fetchNews();
-    }, [])
 
     const handleTouchStart = (event) => {
         const touch = event.touches[0];
@@ -58,7 +43,7 @@ function NewsGallery({display}) {
         >
             <div className={styles.slider__content} style={{ transform: `translateX(${offset}rem)` }}>
                 {news.length > 0 ?
-                    news.map(elem => <NewsCard key={elem.id} news={elem} />) :
+                    news.slice(0, CARDCOUNT).map(elem => <NewsCard key={elem.id} news={elem} />) :
                     <NewsCard skeleton />}
             </div>
         </div>
