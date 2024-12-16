@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CARDCOUNT, SWIPELENGTH } from "../../constants/constants";
 import styles from "./NewsGallery.module.sass";
 import NewsCard from "../NewsCard/NewsCard";
@@ -33,6 +33,20 @@ function NewsGallery({news, display}) {
             setOffset(move)
         }
     }
+    
+    useEffect(_ => {
+        const handleWheel = event => {
+            event.preventDefault();
+            moveSlider(event.deltaY / -297);
+        };
+
+        const slider = document.getElementsByClassName(styles.slider)[0];
+        slider.addEventListener('wheel', handleWheel, { passive: false });
+
+        return () => {
+            slider.removeEventListener('wheel', handleWheel);
+        };
+    }, [offset])
 
     return (
         <div
