@@ -29,7 +29,7 @@ function NewsGallery({news, display}) {
         } else if (length < 0) {
             move = offset - (SWIPELENGTH * Math.ceil(length * -1 / 200));
         }
-        if (-1 * SWIPELENGTH * (news.length - 1) <= move && move <= 0) {
+        if (-1 * SWIPELENGTH * CARDCOUNT < move && move <= 0) {
             setOffset(move)
         }
     }
