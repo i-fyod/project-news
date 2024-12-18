@@ -7,17 +7,25 @@
 	gap: 1rem
 	flex-direction: row-reverse
 	transition: transform .3s ease
+	@media (width >= 1200px)
+		transition: transform 0s ease
 
 	&__active
 		position: absolute
 		left: 3rem
 		right: 3rem
+		@media (width >= 1200px)
+			left: 10rem
+			top: 6rem
+
 		form
 			padding-top: 11rem
 			height: 16rem
 			transform: translateY(-11rem)
 			button
 				transform: translateX(calc(-1 * (100vw - 6rem - 5rem)))
+				@media (width >= 1200px)
+					transform: translateX(calc(-1 * (100vw - 6rem - 5rem - 7rem)))
 			
 			input
 				transform: translateX(6rem)
@@ -48,6 +56,8 @@
 .content
 	padding-bottom: 1rem
 	transform: translateY(-9rem)
+	@media (width >= 1200px)
+		margin-bottom: -8rem
 	animation: rightToLeft .4s ease
 	&__categories
 		background-color: green
