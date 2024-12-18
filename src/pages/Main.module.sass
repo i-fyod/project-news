@@ -1,7 +1,16 @@
 @import "../styles/abstracts/variables"
     
+.header
+    @media (width >= 1200px)
+        display: grid
+        grid-template-columns: 1fr 1fr
+        gap: 2rem
+        align-items: center
+
 .sectionForYou
     padding-bottom: 10rem !important
+    @media (width >= 1200px)
+        padding-bottom: 2rem !important
 
     &__header
         display: flex

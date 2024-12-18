@@ -10,5 +10,9 @@ $gap: 2rem
         display: flex
         gap: 2rem
         padding: 0 $padding
+        @media (width >= 768px)
+            padding: 0 calc((100vw - 2 * $card-width) / 2)
+        @media (width >= 1200px)
+            padding: 0 calc((90vw - 3 * $card-width) / 2)
         width: calc($card-width * $card-count + $gap * ($card-count - 1) + $padding * 2)
         transition: all .45s ease-in-out

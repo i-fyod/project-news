@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
 import { CARDCOUNT, SWIPELENGTH } from "../../constants/constants";
 import styles from "./NewsGallery.module.sass";
 import NewsCard from "../NewsCard/NewsCard";
 
 function NewsGallery({news, display}) {
+    const isMobile = useMediaQuery({ query: "(width < 768px)" });
+    const isMiniTablet = useMediaQuery({ query: "(width >= 768px) and (width < 1200px)" });
+    const isTablet = useMediaQuery({ query: "(width >= 1200px)" });
     const [startX, setStartX] = useState(0);
     const [offset, setOffset] = useState(0);
 
@@ -29,8 +33,14 @@ function NewsGallery({news, display}) {
         } else if (length < 0) {
             move = offset - (SWIPELENGTH * Math.ceil(length * -1 / 200));
         }
-        if (-1 * SWIPELENGTH * CARDCOUNT < move && move <= 0) {
-            setOffset(move)
+        if (move <= 0) {
+            if (isMobile && -1 * SWIPELENGTH * CARDCOUNT < move) {
+                setOffset(move);
+            } else if (isMiniTablet && -1 * SWIPELENGTH * (CARDCOUNT - 1) < move) {
+                setOffset(move);
+            } else if (isTablet && -1 * SWIPELENGTH * (CARDCOUNT - 2) < move) {
+                setOffset(move);
+            }
         }
     }
     

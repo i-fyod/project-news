@@ -5,10 +5,12 @@ import Categories from "../components/Categories/Categories";
 import Search from "../components/Search/Search";
 import styles from "./Main.module.sass";
 import { getCategories, getNews } from "../api/apiNews";
+import { useMediaQuery } from "react-responsive";
 import { useState } from "react";
 import { useFetch } from "../helpers/hooks/useFetch";
 
 function Main() {
+    const isTablet = useMediaQuery({ query: "(width >= 1200px)" });
     const numberVisibleNews = 30; // Макс. кол-во новостей на 1 странице
     const [filters, setFilters] = useState({
         param: "search",
@@ -23,7 +25,7 @@ function Main() {
         })
     }
 
-    const [visible, setVisible] = useState(1); // Кол-во отображаемых новостей в NewsList
+    const [visible, setVisible] = useState(!isTablet ? 1 : 2); // Кол-во отображаемых новостей в NewsList
     const [searchIsActive, setSearchActive] = useState(false) // Состояние панели поиска
 
     // Реализовать error
@@ -41,7 +43,7 @@ function Main() {
 
 	return ( 
 		<>
-			<div className="container">
+			<div className={`container ${styles.header}`}>
 				{searchIsActive ? "" : <Header />}
                 <Search hideAll={setSearchActive} categories={dataCategories && dataCategories.categories ? ["All", ...dataCategories.categories] : ""}/>
 			</div>
@@ -50,7 +52,7 @@ function Main() {
                 <div className={`container ${styles.sectionForYou}`}>
                     <div className={styles.sectionForYou__header}>
                         <h2 className={styles.sectionForYou__title}>News For You</h2>
-                        {data && data.news.length > 0 ? <button onClick={_ => setVisible(visible === 1 ? numberVisibleNews : 1)} className={styles.sectionForYou__more}>{visible === 1 ? "View All" : "Hide"}</button> : <div className={styles.sectionForYou__loading}></div>}
+                        {data && data.news.length > 0 ? <button onClick={_ => setVisible((visible === 1 && !isTablet) || visible === 2 ? numberVisibleNews : (!isTablet ? 1 : 2))} className={styles.sectionForYou__more}>{(visible === 1 && !isTablet) || visible === 2 ? "View All" : "Hide"}</button> : <div className={styles.sectionForYou__loading}></div>}
                     </div>
                     {dataCategories && data && data.news ? 
                     <Categories categories={["All", ...dataCategories.categories]} selected={filters.category} toSelect={name => {
