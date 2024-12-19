@@ -11,6 +11,8 @@
     border-radius: 2rem
     padding: 1rem
     cursor: pointer
+    @media (width >= 1366px)
+        grid-template-rows: repeat(2, 1fr)
 
     &__image
         grid-area: img
@@ -36,6 +38,10 @@
         font-size: 1.3rem
         line-height: 2.2rem
         overflow: hidden
+        @media (width >= 1366px)
+            font-size: 1.5rem
+            align-self: end
+            text-wrap: nowrap
 
     &__tags
         display: flex
@@ -46,9 +52,12 @@
     &__tag
         font-size: 1.2rem
         color: $gray-color
+        @media (width >= 1366px)
+            font-size: 1.35rem
 
 .skeleton
     div, h3, ul
+        height: 100%
         border-radius: 1rem
         background: linear-gradient(to right, rgba(130, 130, 130, 0.2) 8%, rgba(130, 130, 130, 0.3) 18%, rgba(130, 130, 130, 0.2) 33%)
         background-size: 80rem 100rem

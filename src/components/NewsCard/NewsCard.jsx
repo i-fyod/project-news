@@ -35,7 +35,7 @@ function NewsCard({news, skeleton=false}) {
                     <img src={avatar} alt="" className={styles.card__photo} />
                 </div>
                 <div className={styles.card__about}>
-                    <h4 className={styles.card__author}>{news.author}</h4>
+                    <h4 className={styles.card__author}>{news.author ? news.author : "Unknown author"}</h4>
                     <p className={styles.card__time}>{formatTimeAgo(news.published)}</p>
                 </div>
             </div>          
