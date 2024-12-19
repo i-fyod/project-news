@@ -8,6 +8,7 @@ function NewsGallery({news, display}) {
     const isMobile = useMediaQuery({ query: "(width < 768px)" });
     const isMiniTablet = useMediaQuery({ query: "(width >= 768px) and (width < 1200px)" });
     const isTablet = useMediaQuery({ query: "(width >= 1200px)" });
+    const isLaptop = useMediaQuery({ query: "(width >= 1366px)" });
     const [startX, setStartX] = useState(0);
     const [offset, setOffset] = useState(0);
 
@@ -33,6 +34,9 @@ function NewsGallery({news, display}) {
         } else if (length < 0) {
             move = offset - (SWIPELENGTH * Math.ceil(length * -1 / 200));
         }
+
+        if (isLaptop) return;
+    
         if (move <= 0) {
             if (isMobile && -1 * SWIPELENGTH * CARDCOUNT < move) {
                 setOffset(move);
@@ -46,7 +50,9 @@ function NewsGallery({news, display}) {
     
     useEffect(_ => {
         const handleWheel = event => {
-            event.preventDefault();
+            if (!isLaptop) {
+                event.preventDefault();
+            }
             moveSlider(event.deltaY / -297);
         };
 
