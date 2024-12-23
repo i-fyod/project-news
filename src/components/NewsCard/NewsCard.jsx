@@ -1,11 +1,12 @@
 import styles from "./NewsCard.module.sass"
 import {formatTimeAgo} from "../../helpers/formatTimeAgo"
+import { CARDCOUNT } from "../../constants/constants";
 import avatar from "../../assets/icons/avatar.svg"
 
 function NewsCard({news, skeleton=false}) {
     return (
             skeleton ? 
-            <>
+            Array.from({length: CARDCOUNT}).map(_ => <>
                 <div className={`${styles.card} ${styles.skeleton}`}>
                     <div className={styles.card__image}></div>
                     <h3 className={styles.card__title}></h3>
@@ -15,16 +16,7 @@ function NewsCard({news, skeleton=false}) {
                         <p className={styles.card__time}></p>
                     </div>
                 </div>
-                <div className={`${styles.card} ${styles.skeleton}`}>
-                    <div className={styles.card__image}></div>
-                    <h3 className={styles.card__title}></h3>
-                    <div className={styles.card__avatar}></div>
-                    <div className={styles.card__about}>
-                        <h4 className={styles.card__author}></h4>
-                        <p className={styles.card__time}></p>
-                    </div>
-                </div>
-            </>
+            </>)
             :
             <div className={styles.card}>
                 <div className={styles.card__image}>
