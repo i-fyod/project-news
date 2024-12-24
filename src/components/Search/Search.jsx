@@ -113,7 +113,7 @@ function Search({ hideAll, categories }) {
             {focused ?
                 <div className={styles.content}>
                     <Categories categories={categories} selected={filters.category} toSelect={category => changeFilter("category", category)} />
-                    {debouncedKeywords ? <NewsList news={news} loading={loading} toPage={goToPage} thisPage={filters.pageNumber} visible={50} /> : ""}
+                    {debouncedKeywords ? <NewsList news={loading ? new Array(numberVisibleNews).fill({}) : news} loading={loading} toPage={goToPage} thisPage={filters.pageNumber} visible={50} /> : ""}
                 </div> :
                 ""}
 

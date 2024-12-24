@@ -29,9 +29,10 @@ function Main() {
     const [searchIsActive, setSearchActive] = useState(false) // Состояние панели поиска
 
     // Реализовать error
-    const { data, isLoading} = useFetch(getNews, filters);
+    const { data, isLoading: isDataLoading} = useFetch(getNews, filters);
     const { data: dataLatest} = useFetch(getNews, {});
-    const { data: dataCategories} = useFetch(getCategories);
+    const { data: dataCategories, isLoading: isCategoriesLoading} = useFetch(getCategories);
+    
 
     const goToPage = page => {
         changeFilter("pageNumber", page)
@@ -54,14 +55,11 @@ function Main() {
                         <h2 className={styles.sectionForYou__title}>News For You</h2>
                         {data && data.news.length > 0 ? <button onClick={_ => setVisible((visible === 1 && !isTablet) || visible === 2 ? numberVisibleNews : (!isTablet ? 1 : 2))} className={styles.sectionForYou__more}>{(visible === 1 && !isTablet) || visible === 2 ? "View All" : "Hide"}</button> : <div className={styles.sectionForYou__loading}></div>}
                     </div>
-                    {dataCategories && data && data.news ? 
-                    <Categories categories={["All", ...dataCategories.categories]} selected={filters.category} toSelect={name => {
+                    <Categories categories={isCategoriesLoading ? new Array(45).fill("") : ["All", ...dataCategories.categories]} selected={filters.category} toSelect={name => {
                         changeFilter("category", name);
                         changeFilter("pageNumber", 2);    
-                    }}/> :
-                    ""}
-                    {data && data.news ? 
-                    <NewsList news={data.news} visible={visible} toPage={goToPage} thisPage={filters.pageNumber} loading={isLoading} /> : ""}
+                    }}/>
+                    <NewsList news={isDataLoading ? new Array(numberVisibleNews).fill({}) : data.news} visible={visible} toPage={goToPage} thisPage={filters.pageNumber} loading={isDataLoading} />
                 </div> :
                 ""
             }
