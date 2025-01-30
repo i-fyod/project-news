@@ -1,6 +1,12 @@
 import styles from "./Categories.module.sass"
 
-function Categories({ categories, selected, toSelect }) {
+interface Props {
+    categories: string[];
+    selected: string;
+    toSelect: (category: string) => void;
+}
+
+function Categories({ categories, selected, toSelect }: Props) {
     return (
         categories[0] != "All" ?
             <div className={`${styles.categories} ${styles.skeleton}`}>
