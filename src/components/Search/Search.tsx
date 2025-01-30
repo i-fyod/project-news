@@ -4,17 +4,17 @@ import { useDebounce } from "../../helpers/hooks/useDebounce";
 import styles from "./Search.module.sass";
 import Categories from "../Categories/Categories";
 import NewsList from "../NewsList/NewsList";
+import { INews, IFilters } from "../../interfaces";
 
-function Search({ hideAll, categories }) {
-    const numberVisibleNews = 50; // Макс. кол-во новостей в выдаче
+function Search({ hideAll, categories }: {hideAll: (x: boolean) => void; categories: string[]}) {
+    const numberVisibleNews: number = 50; // Макс. кол-во новостей в выдаче
     const [filters, setFilters] = useState({
-        param: "search",
         pageSize: numberVisibleNews,
         pageNumber: 2,
         category: "All"
     });
 
-    const changeFilter = (key, value) => {
+    const changeFilter = <K extends keyof IFilters>(key: K, value: IFilters[K]) => {
         setFilters(prev => {
             return {...prev, [key]: value}
         })
@@ -22,12 +22,12 @@ function Search({ hideAll, categories }) {
     
     const [focused, setFocused] = useState(false); // Фокус на поиске
     const [keywords, setKeywords] = useState(""); // Ключевые слова из поиска
-    const [news, setNews] = useState([]); // Новости из api
+    const [news, setNews] = useState<INews[]>([]); // Новости из api
     const [loading, setLoading] = useState(false) // Состояние загрузки новостей
-    const inputRef = useRef(null);
+    const inputRef = useRef<HTMLInputElement>(null);
     const debouncedKeywords = useDebounce(keywords, 1000);
 
-    const fetchNews = async (keywords) => {
+    const fetchNews = async (keywords: string) => {
         try {
             const response = await getNews({
                 ...filters,
@@ -39,7 +39,7 @@ function Search({ hideAll, categories }) {
         }
     };
 
-    const goToPage = page => {
+    const goToPage = (page: number) => {
         changeFilter("pageNumber", page);
         window.scrollTo({
             top: 0,
@@ -47,8 +47,8 @@ function Search({ hideAll, categories }) {
         });
     } 
 
-    useEffect(_ => {
-        const loadNews = async _ => {
+    useEffect(() => {
+        const loadNews = async () => {
             setLoading(true);
             await fetchNews(debouncedKeywords);
             setLoading(false);
@@ -58,9 +58,9 @@ function Search({ hideAll, categories }) {
         }
     }, [filters.pageNumber])
 
-    useEffect(_ => {
+    useEffect(() => {
         if (filters.pageNumber === 2 && focused && debouncedKeywords) {
-            const loadNews = async _ => {
+            const loadNews = async () => {
                 setLoading(true);
                 await fetchNews(debouncedKeywords);
                 setLoading(false);
@@ -71,9 +71,9 @@ function Search({ hideAll, categories }) {
         }
     }, [filters.category, debouncedKeywords])
 
-    useEffect(_ => {
+    useEffect(() => {
         if (focused) {
-            inputRef.current.focus();
+            inputRef.current!.focus();
             hideAll(true);
         } else {
             hideAll(false);
@@ -112,7 +112,7 @@ function Search({ hideAll, categories }) {
             </form>
             {focused ?
                 <div className={styles.content}>
-                    <Categories categories={categories} selected={filters.category} toSelect={category => changeFilter("category", category)} />
+                    <Categories categories={categories} selected={filters.category} toSelect={(category: string) => changeFilter("category", category)} />
                     {debouncedKeywords ? <NewsList news={loading ? new Array(numberVisibleNews).fill({}) : news} loading={loading} toPage={goToPage} thisPage={filters.pageNumber} visible={50} /> : ""}
                 </div> :
                 ""}

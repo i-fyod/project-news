@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { CARDCOUNT, SWIPELENGTH } from "../../constants/constants";
 import styles from "./NewsGallery.module.sass";
 import NewsCard from "../NewsCard/NewsCard";
+import { INews } from "../../interfaces";
 
-function NewsGallery({news, display}) {
+function NewsGallery({news, display}: {news: INews[]; display: "none" | "block"}) {
     const isMobile = useMediaQuery({ query: "(width < 768px)" });
     const isMiniTablet = useMediaQuery({ query: "(width >= 768px) and (width < 1200px)" });
     const isTablet = useMediaQuery({ query: "(width >= 1200px)" });
@@ -12,12 +13,12 @@ function NewsGallery({news, display}) {
     const [startX, setStartX] = useState(0);
     const [offset, setOffset] = useState(0);
 
-    const handleTouchStart = (event) => {
+    const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
         const touch = event.touches[0];
         setStartX(touch.clientX);
     };
 
-    const handleTouchEnd = (event) => {
+    const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
         const touch = event.changedTouches[0];
         const endX = touch.clientX;
 
@@ -27,7 +28,7 @@ function NewsGallery({news, display}) {
         moveSlider(length);
     };
 
-    const moveSlider = (length) => {
+    const moveSlider = (length: number) => {
         let move = 0;
         if (length > 0) {
             move = offset + (SWIPELENGTH * Math.ceil(length / 200));
@@ -48,12 +49,12 @@ function NewsGallery({news, display}) {
         }
     }
     
-    useEffect(_ => {
-        const handleWheel = event => {
+    useEffect(() => {
+        const handleWheel: EventListener = (event: any) => {
             if (!isLaptop) {
                 event.preventDefault();
             }
-            moveSlider(event.deltaY / -297);
+            moveSlider((event as WheelEvent).deltaY / -297);
         };
 
         const slider = document.getElementsByClassName(styles.slider)[0];

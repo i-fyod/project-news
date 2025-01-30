@@ -1,6 +1,12 @@
 import styles from "./NewsItem.module.sass";
+import { INews } from "../../interfaces";
 
-function NewsItem({news, skeleton=false}) {
+interface Props {
+    news: INews;
+    skeleton: boolean;
+}
+
+function NewsItem({news, skeleton=false}: Props) {
     return (
         skeleton ? 
         <li className={`${styles.newsItem} ${styles.skeleton}`}>
@@ -15,7 +21,7 @@ function NewsItem({news, skeleton=false}) {
             </div>
             <h3 className={styles.newsItem__title}>{news.title}</h3>
             <ul className={styles.newsItem__tags}>
-                {news.category.map(tag => <li key={tag.id} className={styles.newsItem__tag}>{"#" + tag}</li>)}
+                {news.category.map((tag, index) => <li key={index} className={styles.newsItem__tag}>{"#" + tag}</li>)}
             </ul>
         </li>
     )
