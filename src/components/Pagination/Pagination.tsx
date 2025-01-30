@@ -1,6 +1,11 @@
 import styles from "./Pagination.module.sass"
 
-function Pagination({selected, toPage}) {
+interface Props {
+    selected: number;
+    toPage: (page: number) => void;
+}
+
+function Pagination({selected, toPage}: Props) {
 
     const pages = [1, 2, 3, 4, 5, 6, 7, 8];
 

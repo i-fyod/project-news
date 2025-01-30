@@ -2,8 +2,9 @@ import styles from "./NewsCard.module.sass"
 import {formatTimeAgo} from "../../helpers/formatTimeAgo"
 import { CARDCOUNT } from "../../constants/constants";
 import avatar from "../../assets/icons/avatar.svg"
+import { INews } from "../../interfaces";
 
-function NewsCard({news, skeleton=false}) {
+function NewsCard({news, skeleton=false}: {news?: INews; skeleton?: boolean}) {
     return (
             skeleton ? 
             Array.from({length: CARDCOUNT}).map(_ => <>
@@ -18,6 +19,7 @@ function NewsCard({news, skeleton=false}) {
                 </div>
             </>)
             :
+            news ?
             <div className={styles.card}>
                 <div className={styles.card__image}>
                     {news.image !== "None" ? <img src={news.image} alt="" className={styles.card__photo} /> : ""}
@@ -30,7 +32,7 @@ function NewsCard({news, skeleton=false}) {
                     <h4 className={styles.card__author}>{news.author ? news.author : "Unknown author"}</h4>
                     <p className={styles.card__time}>{formatTimeAgo(news.published)}</p>
                 </div>
-            </div>          
+            </div> : null       
     )
 }
 
