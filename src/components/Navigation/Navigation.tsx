@@ -2,7 +2,7 @@ import styles from "./Navigation.module.sass"
 
 function Navigation() {
     const menuItemColor = "#9397A0";
-    const accentItemColor = "#5474FD";
+    const accentItemColor = "#5474FD"
 
     return (
         <nav className={styles.navbar}>

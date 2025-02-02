@@ -4,11 +4,11 @@ import { useDebounce } from "../../helpers/hooks/useDebounce";
 import styles from "./Search.module.sass";
 import Categories from "../Categories/Categories";
 import NewsList from "../NewsList/NewsList";
-import { INews, IFilters } from "../../interfaces";
+import { INews, IFilters, CategoriesType } from "../../interfaces";
 
-function Search({ hideAll, categories }: {hideAll: (x: boolean) => void; categories: string[]}) {
+function Search({ hideAll, categories }: {hideAll: (x: boolean) => void; categories: CategoriesType[]}) {
     const numberVisibleNews: number = 50; // Макс. кол-во новостей в выдаче
-    const [filters, setFilters] = useState({
+    const [filters, setFilters] = useState<IFilters>({
         pageSize: numberVisibleNews,
         pageNumber: 2,
         category: "All"
@@ -112,7 +112,7 @@ function Search({ hideAll, categories }: {hideAll: (x: boolean) => void; categor
             </form>
             {focused ?
                 <div className={styles.content}>
-                    <Categories categories={categories} selected={filters.category} toSelect={(category: string) => changeFilter("category", category)} />
+                    <Categories categories={categories} selected={filters.category} toSelect={(category) => changeFilter("category", category)} />
                     {debouncedKeywords ? <NewsList news={loading ? new Array(numberVisibleNews).fill({}) : news} loading={loading} toPage={goToPage} thisPage={filters.pageNumber} visible={50} /> : ""}
                 </div> :
                 ""}
