@@ -1,11 +1,26 @@
 @use "./core/normalize"
 @use "./core/reset"
 @use "./core/typography"
-@import "./abstracts/variables"
 
 *
     box-sizing: border-box
     font-family: "Gellix" !important
+
+:root 
+    --bg-color: #FAFAFA
+    --black-color: #19202D
+    --white-color: #FFFFFF
+    --gray-color: #9397A0
+    --lightblue-color: #83B1FF
+    --accent-color: #5474FD
+
+:root[data-theme = "dark"]
+    --bg-color: #191919
+    --black-color: #E5E6E9
+    --white-color: #232323
+    --gray-color: #9397A0
+    --lightblue-color: #83B1FF
+    --accent-color: #5474FD
 
 html
     font-size: 62.5%
@@ -23,7 +38,7 @@ html
         font-size: 101.5%
 
 body
-    background-color: $bg-color
+    background-color: var(--bg-color)
     height: 100vh
     @media (width >= 1200px)
         padding-left: 7rem

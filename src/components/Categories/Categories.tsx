@@ -1,9 +1,10 @@
+import { CategoriesType } from "../../interfaces";
 import styles from "./Categories.module.sass"
 
 interface Props {
-    categories: string[];
+    categories: CategoriesType[];
     selected: string;
-    toSelect: (category: string) => void;
+    toSelect: (category: CategoriesType) => void;
 }
 
 function Categories({ categories, selected, toSelect }: Props) {

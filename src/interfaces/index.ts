@@ -30,6 +30,7 @@ export interface CategoriesApiResponse {
 }
 
 export type CategoriesType =
+    "All"
   | "regional"
   | "technology"
   | "lifestyle"
