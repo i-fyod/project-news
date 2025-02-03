@@ -1,14 +1,14 @@
-import Header from "../components/Header/Header";
-import NewsGallery from "../components/NewsGallery/NewsGallery";
-import NewsList from "../components/NewsList/NewsList";
-import Categories from "../components/Categories/Categories";
-import Search from "../components/Search/Search";
+import Header from "../../components/Header/Header";
+import NewsGallery from "../../components/NewsGallery/NewsGallery";
+import NewsList from "../../components/NewsList/NewsList";
+import Categories from "../../components/Categories/Categories";
+import Search from "../../components/Search/Search";
 import styles from "./Main.module.sass";
-import { getCategories, getLatestNews, getNews } from "../api/apiNews";
+import { getCategories, getLatestNews, getNews } from "../../api/apiNews";
 import { useMediaQuery } from "react-responsive";
 import { useState } from "react";
-import { useFetch } from "../helpers/hooks/useFetch";
-import { CategoriesApiResponse, IFilters, NewsApiResponse } from "../interfaces";
+import { useFetch } from "../../helpers/hooks/useFetch";
+import { CategoriesApiResponse, IFilters, NewsApiResponse } from "../../interfaces";
 
 function Main() {
     const isTablet = useMediaQuery({ query: "(width >= 1200px)" });
@@ -45,7 +45,7 @@ function Main() {
 	return ( 
 		<>
 			<div className={`container ${styles.header}`}>
-				{searchIsActive ? "" : <Header />}
+				{searchIsActive ? "" : <Header size={undefined} subTitle="" title="Welcome back!" />}
                 <Search hideAll={setSearchActive} categories={isCategoriesLoading ? new Array(45).fill("") : ["All", ...dataCategories!.categories]}/>
 			</div>
             <NewsGallery news={dataLatest ? dataLatest.news : []} display={searchIsActive ? "none" : "block"} />

@@ -15,16 +15,15 @@
 
     &__image
         grid-area: img
-        background-color: var(--lightblue-color)
         border-radius: 1rem
         overflow: hidden
-        background: url("../../assets/icons/no_image.svg") center / contain no-repeat
+        position: relative
 
     &__photo
         height: 101%
         width: 101%
         object-fit: cover
-        position: relative
+        position: absolute
         left: 50%
         top: 50%
         transform: translate(-50%, -50%)
@@ -40,6 +39,9 @@
     &__avatar
         grid-area: avatar
         overflow: hidden
+        place-self: center
+        height: 4rem
+        aspect-ratio: 1 / 1
 
     &__about
         grid-area: about
