@@ -1,5 +1,3 @@
-@import "../../styles/abstracts/variables"
-    
 .newsItem
     display: grid
     grid-template-columns: 7rem 1fr
@@ -7,7 +5,7 @@
     grid-template-areas: "img title" "img tags"
     gap: 1rem
     height: 9rem
-    background-color: white
+    background-color: var(--white-color)
     border-radius: 2rem
     padding: 1rem
     cursor: pointer
@@ -18,16 +16,15 @@
         grid-area: img
         height: 7rem
         aspect-ratio: 1 / 1
-        background-color: $lightBlue-color
         border-radius: 2.2rem
         overflow: hidden
-        background: url("../../assets/icons/no_image.svg") center / contain no-repeat
+        position: relative
 
     &__photo
         height: 103%
         width: 103%
         object-fit: cover
-        position: relative
+        position: absolute
         left: 50%
         top: 50%
         transform: translate(-50%, -50%)
@@ -36,6 +33,7 @@
         grid-area: title
         font-weight: 600
         font-size: 1.3rem
+        color: var(--black-color)
         line-height: 2.2rem
         overflow: hidden
         @media (width >= 1366px)
@@ -51,7 +49,7 @@
 
     &__tag
         font-size: 1.2rem
-        color: $gray-color
+        color: var(--gray-color)
         @media (width >= 1366px)
             font-size: 1.35rem
 
