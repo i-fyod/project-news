@@ -10,4 +10,12 @@ export const themes: IThemes = {
     light: "light"
 };
 
-export const ThemeContext = createContext({})
+export interface IThemeContext {
+    theme: "dark" | "light";
+    setTheme: (theme: "dark" | "light") => void;
+}
+
+export const ThemeContext = createContext<IThemeContext>({
+    theme: themes.light,
+    setTheme: () => {}
+})

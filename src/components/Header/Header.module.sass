@@ -15,7 +15,7 @@
         overflow: hidden
         height: 5rem
         aspect-ratio: 1 / 1
-        border-radius: 1.2rem
+        border-radius: 1.5rem
         background-color: var(--lightblue-color)
 
     &__photo
@@ -37,3 +37,9 @@
         color: var(--gray-color)
         @media (width >= 1366px)
             font-size: 1.25rem
+
+    &__big
+        grid-template-columns: 7rem 1fr
+
+    &__big &__avatar
+            height: 7rem
