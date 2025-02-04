@@ -108,7 +108,11 @@ function Search({ hideAll, categories }: {hideAll: (x: boolean) => void; categor
                 } } className={styles.search__btn} type="button">
                     {focused ? icons.after : icons.before}
                 </button>
-                <input className={styles.search__field} type="text" placeholder="Search for article..." value={keywords} onChange={e => setKeywords(e.target.value)} ref={inputRef} onFocus={() => setFocused(true)} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {if (e.key === 'Enter') e.preventDefault()} }/>
+                <input className={styles.search__field} type="text" placeholder="Search for article..." value={keywords} onChange={e => setKeywords(e.target.value)} ref={inputRef} onFocus={() => setFocused(true)} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        document.documentElement.focus();
+                    }}}/>
             </form>
             {focused ?
                 <div className={styles.content}>
