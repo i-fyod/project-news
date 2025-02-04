@@ -103,12 +103,17 @@ function Search({ hideAll, categories }: {hideAll: (x: boolean) => void; categor
 
     return (
         <search className={focused ? styles.search__active : ""} role="search">
-            <form className={styles.search} onSubmit={e => {e.preventDefault}} action="#">
+            <form className={styles.search} action="">
                 <button onClick={_ => {setFocused(!focused)
                 } } className={styles.search__btn} type="button">
                     {focused ? icons.after : icons.before}
                 </button>
-                <input className={styles.search__field} type="text" placeholder="Search for article..." value={keywords} onChange={e => setKeywords(e.target.value)} ref={inputRef} onFocus={_ => setFocused(true)} />
+                <input className={styles.search__field} type="text" placeholder="Search for article..." value={keywords} onChange={e => setKeywords(e.target.value)} ref={inputRef} onFocus={() => setFocused(true)} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        inputRef.current?.blur();
+                    }
+                    }}/>
             </form>
             {focused ?
                 <div className={styles.content}>
