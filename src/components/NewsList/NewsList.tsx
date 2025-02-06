@@ -18,7 +18,7 @@ function NewsList({ news, visible = 30, toPage, thisPage, loading }: Props) {
             <ul className={styles.newsList__news}>
                 {news.slice(0, visible).map(item => <NewsItem news={item} skeleton={loading} />)}
             </ul>
-            {pagination && !loading ? <Pagination selected={thisPage - 1} toPage={toPage} /> : ""}
+            {pagination && !loading && news.length > 0 ? <Pagination selected={thisPage - 1} toPage={toPage} /> : ""}
         </div>
     )
 }

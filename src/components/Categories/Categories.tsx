@@ -1,13 +1,24 @@
+import { useQuery } from "@tanstack/react-query";
 import { CategoriesType } from "../../interfaces";
 import styles from "./Categories.module.sass"
+import { getCategories } from "../../api/apiNews";
 
 interface Props {
-    categories: CategoriesType[];
     selected: string;
     toSelect: (category: CategoriesType) => void;
 }
 
-function Categories({ categories, selected, toSelect }: Props) {
+function Categories({ selected, toSelect }: Props) {
+
+    const { data, isLoading} = useQuery({
+        queryKey: ["categories"],
+        queryFn: getCategories,
+        select: (data) => data.categories,
+        staleTime: Infinity,
+    });
+
+    const categories: CategoriesType[] = !isLoading && data ? ["All", ...data] : new Array(45).fill("");
+
     return (
         categories[0] != "All" ?
             <div className={`${styles.categories} ${styles.skeleton}`}>
