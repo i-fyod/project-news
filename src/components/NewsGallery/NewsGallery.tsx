@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { CARDCOUNT, SWIPELENGTH } from "../../constants/constants";
-import styles from "./NewsGallery.module.sass";
-import NewsCard from "../NewsCard/NewsCard";
-import { useQuery } from "@tanstack/react-query";
-import { getLatestNews } from "../../api/apiNews";
 
-function NewsGallery({display}: {display: "none" | "block"}) {
+import { useQuery } from "@tanstack/react-query";
+
+import { getLatestNews } from "../../api/apiNews";
+import { CARDCOUNT, SWIPELENGTH } from "../../constants/constants";
+import NewsCard from "../NewsCard/NewsCard";
+import styles from "./NewsGallery.module.sass";
+
+function NewsGallery({ display }: { display: "none" | "block" }) {
     const isMobile = useMediaQuery({ query: "(width < 768px)" });
     const isMiniTablet = useMediaQuery({ query: "(width >= 768px) and (width < 1200px)" });
     const isTablet = useMediaQuery({ query: "(width >= 1200px)" });
@@ -14,10 +16,10 @@ function NewsGallery({display}: {display: "none" | "block"}) {
     const [startX, setStartX] = useState(0);
     const [offset, setOffset] = useState(0);
 
-    const { data, isLoading} = useQuery({
+    const { data, isLoading } = useQuery({
         queryKey: ["latestNews"],
         queryFn: getLatestNews,
-        select: (data) => data.news
+        select: (data) => data.news,
     });
 
     const news = isLoading ? [] : data || [];
@@ -40,13 +42,13 @@ function NewsGallery({display}: {display: "none" | "block"}) {
     const moveSlider = (length: number) => {
         let move = 0;
         if (length > 0) {
-            move = offset + (SWIPELENGTH * Math.ceil(length / 200));
+            move = offset + SWIPELENGTH * Math.ceil(length / 200);
         } else if (length < 0) {
-            move = offset - (SWIPELENGTH * Math.ceil(length * -1 / 200));
+            move = offset - SWIPELENGTH * Math.ceil((length * -1) / 200);
         }
 
         if (isLaptop) return;
-    
+
         if (move <= 0) {
             if (isMobile && -1 * SWIPELENGTH * CARDCOUNT < move) {
                 setOffset(move);
@@ -56,8 +58,8 @@ function NewsGallery({display}: {display: "none" | "block"}) {
                 setOffset(move);
             }
         }
-    }
-    
+    };
+
     useEffect(() => {
         const handleWheel: EventListener = (event: any) => {
             if (!isLaptop) {
@@ -67,24 +69,27 @@ function NewsGallery({display}: {display: "none" | "block"}) {
         };
 
         const slider = document.getElementsByClassName(styles.slider)[0];
-        slider.addEventListener('wheel', handleWheel, { passive: false });
+        slider.addEventListener("wheel", handleWheel, { passive: false });
 
         return () => {
-            slider.removeEventListener('wheel', handleWheel);
+            slider.removeEventListener("wheel", handleWheel);
         };
-    }, [offset])
+    }, [offset]);
 
     return (
         <div
-            style={{display: display}}
+            style={{ display: display }}
             className={styles.slider}
             onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-        >
-            <div className={styles.slider__content} style={{ transform: `translateX(${offset}rem)` }}>
-                {!isLoading ? 
-                    news.slice(0, CARDCOUNT).map(elem => <NewsCard key={elem.id} news={elem} />) :
-                    <NewsCard skeleton />}
+            onTouchEnd={handleTouchEnd}>
+            <div
+                className={styles.slider__content}
+                style={{ transform: `translateX(${offset}rem)` }}>
+                {!isLoading ? (
+                    news.slice(0, CARDCOUNT).map((elem) => <NewsCard key={elem.id} news={elem} />)
+                ) : (
+                    <NewsCard skeleton />
+                )}
             </div>
         </div>
     );
