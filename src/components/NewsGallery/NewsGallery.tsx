@@ -20,6 +20,7 @@ function NewsGallery({ display }: { display: "none" | "block" }) {
         queryKey: ["latestNews"],
         queryFn: getLatestNews,
         select: (data) => data.news,
+        refetchInterval: 300000,
     });
 
     const news = isLoading ? [] : data || [];

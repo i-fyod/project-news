@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import styles from "./QueryFailed.module.sass";
 
 interface Props {
@@ -7,7 +5,6 @@ interface Props {
 }
 
 export default function QueryFailed({ refetch }: Props) {
-    const [loading, setLoading] = useState(false);
     const bearColor = "#9397A0";
     const bearLogo = (
         <svg
@@ -260,18 +257,9 @@ export default function QueryFailed({ refetch }: Props) {
                 className={styles.query__button}
                 onClick={() => {
                     refetch();
-                    setLoading(true);
-                }}
-                disabled={loading}>
+                }}>
                 Retry
             </button>
-            {loading ? (
-                <div className={styles.query__loader}>
-                    <div className={styles.spinner}></div>
-                </div>
-            ) : (
-                ""
-            )}
         </div>
     );
 }

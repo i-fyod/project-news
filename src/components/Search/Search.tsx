@@ -29,7 +29,7 @@ function Search({ hideAll }: { hideAll: (x: boolean) => void }) {
     const inputRef = useRef<HTMLInputElement>(null);
     const debouncedKeywords = useDebounce(keywords, 1000);
 
-    const { data, isLoading, isError, refetch } = useQuery({
+    const { data, isFetching, isError, refetch } = useQuery({
         queryKey: ["search", filters, debouncedKeywords],
         queryFn: () =>
             getNews({
@@ -43,9 +43,10 @@ function Search({ hideAll }: { hideAll: (x: boolean) => void }) {
             return data.news;
         },
         enabled: focused && !!debouncedKeywords,
+        gcTime: 0,
     });
 
-    const news = !isLoading && data ? data : [];
+    const news = !isFetching && data ? data : [];
 
     const goToPage = (page: number) => {
         changeFilter("pageNumber", page);
@@ -149,20 +150,22 @@ function Search({ hideAll }: { hideAll: (x: boolean) => void }) {
                         selected={filters.category}
                         toSelect={(category) => changeFilter("category", category)}
                     />
-                    {debouncedKeywords && !isError ? (
-                        <NewsList
-                            news={isLoading ? new Array(numberVisibleNews).fill({}) : news}
-                            loading={isLoading}
-                            toPage={goToPage}
-                            thisPage={filters.pageNumber}
-                            visible={50}
-                        />
-                    ) : isError ? (
-                        <QueryFailed
-                            refetch={() => {
-                                refetch();
-                            }}
-                        />
+                    {debouncedKeywords ? (
+                        isError && !isFetching ? (
+                            <QueryFailed
+                                refetch={() => {
+                                    refetch();
+                                }}
+                            />
+                        ) : (
+                            <NewsList
+                                news={isFetching ? new Array(numberVisibleNews).fill({}) : news}
+                                loading={isFetching}
+                                toPage={goToPage}
+                                thisPage={filters.pageNumber}
+                                visible={50}
+                            />
+                        )
                     ) : (
                         ""
                     )}
