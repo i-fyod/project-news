@@ -2,12 +2,12 @@ import { createContext } from "react";
 
 export interface IThemes {
     dark: "dark";
-    light: "light"
-};
+    light: "light";
+}
 
 export const themes: IThemes = {
     dark: "dark",
-    light: "light"
+    light: "light",
 };
 
 export interface IThemeContext {
@@ -17,5 +17,5 @@ export interface IThemeContext {
 
 export const ThemeContext = createContext<IThemeContext>({
     theme: themes.light,
-    setTheme: () => {}
-})
+    setTheme: () => {},
+});
