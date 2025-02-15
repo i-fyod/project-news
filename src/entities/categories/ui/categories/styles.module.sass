@@ -1,0 +1,44 @@
+.categories
+    margin-bottom: 2rem
+    height: 1.5rem
+    overflow-x: auto
+    display: flex
+    scrollbar-width: none
+
+    @media (width >= 1200px)
+        display: block
+        height: auto
+        line-height: 2.2rem
+
+    &__item
+        user-select: none
+        padding: .1rem .4rem
+        cursor: pointer
+        @media (width >= 1200px)
+            display: inline-block
+        @media (width >= 1366px)
+            font-size: 1.35rem
+
+        &_selected
+            color: var(--accent-color) !important
+            font-weight: 600 !important
+            cursor: auto
+
+.skeleton
+    h2
+        flex-shrink: 0
+        width: 5rem
+        aspect-ratio: 4 / 1.5
+        border-radius: 1rem
+        background: linear-gradient(to right, rgba(130, 130, 130, 0.2) 8%, rgba(130, 130, 130, 0.3) 18%, rgba(130, 130, 130, 0.2) 33%)
+        background-size: 80rem 100rem
+        animation: wave-squares 2s infinite ease-out
+        margin-right: .8rem
+
+@keyframes wave-squares 
+    0% 
+        background-position: -46.8rem 0
+    
+    100% 
+        background-position: 46.8rem 0
+    

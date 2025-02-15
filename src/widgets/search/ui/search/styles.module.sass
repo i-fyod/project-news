@@ -1,0 +1,19 @@
+.search
+    height: 5rem
+    width: 100%
+    display: flex
+    gap: 1rem
+    flex-direction: row-reverse
+    transition: transform .3s ease
+
+.active
+    transform: translateY(-11rem)
+    @media (width >= 1200px)
+        transform: translateY(0rem)
+
+    &__btn
+        transform: translateX(calc(-1 * (100vw - 6rem - 5rem)))
+        @media (width >= 1200px)
+            transform: translateX(calc(-1 * (100vw - 6rem - 5rem - 7rem)))
+    &__input
+        transform: translateX(6rem)

@@ -1,0 +1,1 @@
+export { getNews, getLatestNews, getCategories } from "./apiNews";
