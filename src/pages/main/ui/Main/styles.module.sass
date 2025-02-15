@@ -1,0 +1,38 @@
+.mainPage
+	padding-bottom: 7rem
+	@media (width >= 1200px)
+		padding-bottom: 0
+		
+	&__header
+		@media (width >= 1200px)
+			display: grid
+			grid-template-columns: 1fr 1fr
+			gap: 2rem
+			align-items: center
+		@media (width >= 1366px)
+			gap: 50rem
+
+	&__section
+		margin-bottom: 2rem
+		display: flex
+		justify-content: space-between
+		align-items: center
+
+.search
+	position: absolute
+	left: 3rem
+	right: 3rem
+	height: 5rem
+	transition: transform .3s ease
+	@media (width >= 1200px)
+		transition: transform 0s ease
+		left: 10rem
+		top: 6rem
+
+	&__answer
+		transform: translateY(-9rem)
+		padding-bottom: 10rem
+		@media (width >= 1200px)
+			transform: translateY(2rem)
+			padding-bottom: 2rem
+			

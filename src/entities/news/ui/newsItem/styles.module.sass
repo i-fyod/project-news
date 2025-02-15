@@ -1,0 +1,49 @@
+.newsItem
+    display: grid
+    grid-template-columns: 7rem 1fr
+    grid-template-rows: 60% 1fr
+    grid-template-areas: "img title" "img tags"
+    gap: 1rem
+    height: 9rem
+    background-color: var(--white-color)
+    border-radius: 2rem
+    padding: 1rem
+    cursor: pointer
+    @media (width >= 1366px)
+        grid-template-rows: repeat(2, 1fr)
+
+    &__image
+        grid-area: img
+
+    &__title
+        grid-area: title
+        font-weight: 600
+        font-size: 1.3rem
+        line-height: 2.2rem
+        overflow: hidden
+        @media (width >= 1366px)
+            font-size: 1.5rem
+            align-self: end
+            text-wrap: nowrap
+
+    &__tags
+        display: flex
+        gap: .5rem
+        overflow: hidden
+        white-space: nowrap
+
+.skeleton
+    div, h3, ul
+        height: 100%
+        border-radius: 1rem
+        background: linear-gradient(to right, rgba(130, 130, 130, 0.2) 8%, rgba(130, 130, 130, 0.3) 18%, rgba(130, 130, 130, 0.2) 33%)
+        background-size: 80rem 100rem
+        animation: wave-squares 2s infinite ease-out
+
+@keyframes wave-squares 
+    0% 
+        background-position: -46.8rem 0
+    
+    100% 
+        background-position: 46.8rem 0
+    
