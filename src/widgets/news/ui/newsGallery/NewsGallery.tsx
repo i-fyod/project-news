@@ -17,8 +17,8 @@ interface Props {
 export function NewsGallery({ visible = 10 }: Props) {
     document.documentElement.style.setProperty("--card-count", visible.toString());
 
-    const { data, isFetching, isError, refetch } = useLatestNews();
-    const news: INews[] = !isFetching && data ? data : new Array(visible).fill({});
+    const { data, isLoading, isFetching, isError, refetch } = useLatestNews();
+    const news: INews[] = !isLoading && data ? data : new Array(visible).fill({});
 
     const { offset, handleTouchStart, handleTouchEnd } = useOffset({
         cardCount: visible,
