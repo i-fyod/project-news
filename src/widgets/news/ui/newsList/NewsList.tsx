@@ -21,8 +21,8 @@ export function NewsList({ keywords, visible = 50 }: Props) {
     const categoriesRef = useRef<HTMLDivElement>(null);
     const { filters, changeFilter } = useFilters();
 
-    const { data, isFetching, isError, refetch } = useNews(filters);
-    const news: INews[] = !isFetching && data ? data : new Array(visible).fill({});
+    const { data, isLoading, isFetching, isError, refetch } = useNews(filters);
+    const news: INews[] = !isLoading && data ? data : new Array(visible).fill({});
 
     useEffect(() => {
         changeFilter("keywords", keywords);
