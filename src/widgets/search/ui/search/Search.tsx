@@ -1,21 +1,22 @@
-import { useSearchStore } from "@/app/store";
+import { newsRoute } from "@/app/routes";
 
 import { SearchInput } from "@/features/search/ui";
 
+import { useUrlParams } from "@/shared/lib";
 import { SearchBtn } from "@/shared/ui";
 
 import styles from "./styles.module.sass";
 
 export function Search() {
-    const focused = useSearchStore((state) => state.focused);
-    const setFocused = useSearchStore((state) => state.setFocused);
+    const { search: focused } = useUrlParams();
+    const navigate = newsRoute.useNavigate();
 
     return (
         <form className={`${focused ? styles.active : ""} ${styles.search}`} action="">
             <SearchBtn
                 className={focused ? styles.active__btn : ""}
                 action={() => {
-                    setFocused(!focused);
+                    navigate({ search: { search: !focused }, replace: true });
                 }}
                 focused={focused}
             />

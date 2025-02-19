@@ -1,40 +1,39 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+
+import { Link } from "@tanstack/react-router";
 
 import { Categories } from "@/entities/categories/ui";
 import { NewsItem } from "@/entities/news/ui";
 
 import { useNews } from "@/widgets/news/api";
-import { useFilters } from "@/widgets/news/lib";
 import { QueryError } from "@/widgets/queryError/@x/news";
 
+import { useUrlParams } from "@/shared/lib";
 import { INews } from "@/shared/types";
 import { Circle } from "@/shared/ui";
 
 import styles from "./styles.module.sass";
 
 interface Props {
-    keywords?: string;
     visible?: number;
 }
 
-export function NewsList({ keywords, visible = 50 }: Props) {
+export function NewsList({ visible = 50 }: Props) {
     const categoriesRef = useRef<HTMLDivElement>(null);
-    const { filters, changeFilter } = useFilters();
+    const { page, category, keywords } = useUrlParams();
 
-    const { data, isLoading, isFetching, isError, refetch } = useNews(filters);
+    const { data, isLoading, isFetching, isError, refetch } = useNews({
+        pageSize: 50,
+        pageNumber: page,
+        category: category,
+        keywords: keywords,
+    });
+
     const news: INews[] = !isLoading && data ? data : new Array(visible).fill({});
-
-    useEffect(() => {
-        changeFilter("keywords", keywords);
-    }, [keywords]);
 
     return (
         <>
-            <Categories
-                selected={filters.category}
-                toSelect={(category) => changeFilter("category", category)}
-                ref={categoriesRef}
-            />
+            <Categories selected={category} ref={categoriesRef} />
             {isError && !isFetching ? (
                 <QueryError refetch={() => refetch()}>
                     Oops.. The bear you were looking for is not here. Maybe he went fishing?
@@ -51,17 +50,25 @@ export function NewsList({ keywords, visible = 50 }: Props) {
             {!isFetching && !isError && visible >= 30 ? (
                 <ul className={styles.pagination}>
                     {Array.from({ length: 8 }, (_, index) => (
-                        <Circle
+                        <Link
                             className={styles.pagination__item}
-                            key={index}
-                            isSelected={index + 1 === filters.pageNumber}
-                            onClick={() => {
-                                changeFilter("pageNumber", index + 1);
-                                setTimeout(() => {
-                                    categoriesRef.current?.scrollIntoView({ behavior: "smooth" });
-                                }, 50);
-                            }}
-                        />
+                            to="/news"
+                            search={(prev) => ({
+                                ...prev,
+                                page: index + 1,
+                            })}>
+                            <Circle
+                                key={index}
+                                isSelected={index + 1 === page}
+                                onClick={() => {
+                                    setTimeout(() => {
+                                        categoriesRef.current?.scrollIntoView({
+                                            behavior: "smooth",
+                                        });
+                                    }, 50);
+                                }}
+                            />
+                        </Link>
                     ))}
                 </ul>
             ) : null}

@@ -1,32 +1,37 @@
 import { forwardRef } from "react";
 
-import { CategoriesType } from "@/shared/types";
+import { Link } from "@tanstack/react-router";
+
 import { Subtitle } from "@/shared/ui";
 
-import UseCategories from "../../api";
+import UseCategories from "@/entities/categories/api";
 import styles from "./styles.module.sass";
 
 interface Props {
     selected: string;
-    toSelect: (category: CategoriesType) => void;
 }
 
-export const Categories = forwardRef<HTMLDivElement, Props>(
-    ({ selected, toSelect }: Props, ref) => {
-        const categories = UseCategories();
+export const Categories = forwardRef<HTMLDivElement, Props>(({ selected }: Props, ref) => {
+    const categories = UseCategories();
 
-        return categories[0] != "All" ? (
-            <div className={`${styles.categories} ${styles.skeleton}`} ref={ref}>
-                {categories.map((_) => (
-                    <Subtitle className={styles.categories__item}></Subtitle>
-                ))}
-            </div>
-        ) : (
-            <div className={styles.categories} ref={ref}>
-                {categories.map((category) => (
+    return categories[0] != "All" ? (
+        <div className={`${styles.categories} ${styles.skeleton}`} ref={ref}>
+            {categories.map((_) => (
+                <Subtitle className={styles.categories__item}></Subtitle>
+            ))}
+        </div>
+    ) : (
+        <div className={styles.categories} ref={ref}>
+            {categories.map((category) => (
+                <Link
+                    to="/news"
+                    search={(prev) => ({
+                        ...prev,
+                        page: 1,
+                        category: category,
+                    })}>
                     <Subtitle
                         key={category}
-                        onClick={() => toSelect(category)}
                         className={
                             category === selected
                                 ? `${styles.categories__item} ${styles.categories__item_selected}`
@@ -34,8 +39,8 @@ export const Categories = forwardRef<HTMLDivElement, Props>(
                         }>
                         {"#" + category}
                     </Subtitle>
-                ))}
-            </div>
-        );
-    }
-);
+                </Link>
+            ))}
+        </div>
+    );
+});
