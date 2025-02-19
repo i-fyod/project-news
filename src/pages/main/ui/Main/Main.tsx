@@ -1,4 +1,3 @@
-import { useSearchStore } from "@/app/store";
 import { formatDate } from "@/pages/main/lib";
 
 import { useState } from "react";
@@ -11,6 +10,7 @@ import { NewsGallery, NewsList } from "@/widgets/news/ui";
 import { Search } from "@/widgets/search/ui";
 
 import { useResolution } from "@/shared/lib";
+import { useUrlParams } from "@/shared/lib";
 import { Title } from "@/shared/ui";
 
 import styles from "./styles.module.sass";
@@ -18,8 +18,8 @@ import styles from "./styles.module.sass";
 export function Main() {
     const { isLaptop } = useResolution();
     const [newsCount, setNewsCount] = useState(isLaptop ? 2 : 1);
-    const focused = useSearchStore((state) => state.focused);
-    const debounceKeywords = useSearchStore((state) => state.debounceKeywords);
+
+    const { search: focused, keywords } = useUrlParams();
 
     return (
         <div className={styles.mainPage}>
@@ -31,9 +31,9 @@ export function Main() {
                 />
                 <search className={focused ? styles.search : ""} role="search">
                     <Search />
-                    {!!debounceKeywords && focused ? (
+                    {!!keywords && focused ? (
                         <div className={styles.search__answer}>
-                            <NewsList keywords={debounceKeywords} />
+                            <NewsList />
                         </div>
                     ) : null}
                 </search>

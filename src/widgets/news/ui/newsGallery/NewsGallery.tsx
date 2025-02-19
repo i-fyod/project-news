@@ -1,11 +1,10 @@
-import { useSearchStore } from "@/app/store";
-
 import { NewsCard } from "@/entities/news/ui";
 
 import { useLatestNews } from "@/widgets/news/api";
 import { useOffset } from "@/widgets/news/lib";
 import { QueryError } from "@/widgets/queryError/@x/news";
 
+import { useUrlParams } from "@/shared/lib";
 import { INews } from "@/shared/types";
 
 import styles from "./styles.module.sass";
@@ -25,7 +24,7 @@ export function NewsGallery({ visible = 10 }: Props) {
         sliderClass: styles.slider,
     });
 
-    const focused = useSearchStore((state) => state.focused);
+    const { search: focused } = useUrlParams();
 
     return (
         <div

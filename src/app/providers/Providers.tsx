@@ -1,18 +1,17 @@
-import { ReactNode } from "react";
+import { router } from "@/app/routes";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { RouterProvider } from "@tanstack/react-router";
 
 import { ThemeProvider } from "@/shared/lib/";
 
 const queryClient = new QueryClient();
 
-export function Providers({ children }: { children: ReactNode }) {
+export function Providers() {
     return (
         <ThemeProvider>
             <QueryClientProvider client={queryClient}>
-                {children}
-                <ReactQueryDevtools />
+                <RouterProvider router={router} />
             </QueryClientProvider>
         </ThemeProvider>
     );
