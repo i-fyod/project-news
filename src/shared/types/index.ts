@@ -17,6 +17,13 @@ export interface IFilters {
     keywords?: string;
 }
 
+export interface IUrlParams {
+    search: boolean;
+    page: number;
+    category: CategoriesType;
+    keywords?: string;
+}
+
 export interface NewsApiResponse {
     news: INews[];
     page: number;

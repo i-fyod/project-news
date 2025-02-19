@@ -1,8 +1,8 @@
-import { useSearchStore } from "@/app/store";
+import { newsRoute } from "@/app/routes";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { useDebounce } from "@/shared/lib";
+import { useDebounce, useUrlParams } from "@/shared/lib";
 
 import styles from "./styles.module.sass";
 
@@ -12,24 +12,33 @@ interface Props {
 
 export function SearchInput({ className }: Props) {
     const inputRef = useRef<HTMLInputElement>(null);
-    const focused = useSearchStore((state) => state.focused);
-    const setFocused = useSearchStore((state) => state.setFocused);
-    const keywords = useSearchStore((state) => state.keywords);
-    const setKeywords = useSearchStore((state) => state.setKeywords);
+    const { search: focused, keywords: q } = useUrlParams();
+    const initialKeywords = useRef(q);
+    const [keywords, setKeywords] = useState(initialKeywords.current!);
+    const navigate = newsRoute.useNavigate();
     const debounceKeywords = useDebounce(keywords, 1000);
-    const setDebounceKeywords = useSearchStore((state) => state.setDebounceKeywords);
 
     useEffect(() => {
         if (focused) {
             inputRef.current?.focus();
-        } else {
+        } else if (keywords) {
             inputRef.current!.value = "";
             setKeywords("");
+            navigate({ search: { search: false }, replace: true });
         }
     }, [focused]);
 
     useEffect(() => {
-        setDebounceKeywords(debounceKeywords);
+        if (debounceKeywords !== "" && debounceKeywords !== initialKeywords.current!) {
+            navigate({
+                search: (prev) => ({
+                    ...prev,
+                    page: 1,
+                    category: "All",
+                    keywords: debounceKeywords,
+                }),
+            });
+        }
     }, [debounceKeywords]);
 
     return (
@@ -40,14 +49,22 @@ export function SearchInput({ className }: Props) {
             value={keywords}
             onChange={(e) => setKeywords(e.target.value)}
             ref={inputRef}
-            onFocus={() => setFocused(true)}
+            onFocus={() =>
+                navigate({
+                    search: (prev) => ({
+                        ...prev,
+                        search: true,
+                        keywords: debounceKeywords,
+                    }),
+                })
+            }
             onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
                 if (e.key === "Enter") {
                     e.preventDefault();
                     inputRef.current?.blur();
                 } else if (e.key === "Escape") {
                     e.preventDefault();
-                    setFocused(false);
+                    navigate({ search: { search: false }, replace: true });
                     inputRef.current?.blur();
                 }
             }}
