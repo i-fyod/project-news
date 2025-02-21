@@ -11,6 +11,7 @@ import {
 } from "@tanstack/react-router";
 
 import { Navigation } from "@/widgets/navigation/ui";
+import { NewsPage } from "@/pages/newsPage/ui";
 
 declare module "@tanstack/react-router" {
     interface Register {
@@ -86,14 +87,20 @@ const rootRoute = createRootRoute({
 
 export const newsRoute = createRoute({
     getParentRoute: () => rootRoute,
-    path: "/news",
+    path: "news",
     validateSearch: newsSchema,
     component: Main,
 });
 
+export const newsPostRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: "news/$postId",
+    component: NewsPage,
+});
+
 const profileRoute = createRoute({
     getParentRoute: () => rootRoute,
-    path: "/profile",
+    path: "profile",
     component: Profile,
 });
 
@@ -106,5 +113,5 @@ const notFoundRoute = createRoute({
 });
 
 export const router = createRouter({
-    routeTree: rootRoute.addChildren([newsRoute, profileRoute, notFoundRoute]),
+    routeTree: rootRoute.addChildren([newsRoute, newsPostRoute, profileRoute, notFoundRoute]),
 });

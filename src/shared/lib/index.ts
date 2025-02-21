@@ -1,5 +1,7 @@
 export { ThemeProvider } from "./context/theme/ThemeProvider";
 
+export { formatTimeAgo } from "./helpers/formatTimeAgo";
+
 export { useColor } from "./hooks/useColor";
 export { useResolution } from "./hooks/useResolution";
 export { useDebounce } from "./hooks/useDebounce";

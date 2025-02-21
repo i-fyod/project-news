@@ -3,7 +3,7 @@ import { newsRoute } from "@/app/routes";
 import { SearchInput } from "@/features/search/ui";
 
 import { useUrlParams } from "@/shared/lib";
-import { SearchBtn } from "@/shared/ui";
+import { BackIcon, Button, SearchIcon } from "@/shared/ui";
 
 import styles from "./styles.module.sass";
 
@@ -13,13 +13,13 @@ export function Search() {
 
     return (
         <form className={`${focused ? styles.active : ""} ${styles.search}`} action="">
-            <SearchBtn
+            <Button
                 className={focused ? styles.active__btn : ""}
-                action={() => {
+                onClick={() => {
                     navigate({ search: { search: !focused }, replace: true });
-                }}
-                focused={focused}
-            />
+                }}>
+                {focused ? <BackIcon /> : <SearchIcon />}
+            </Button>
             <SearchInput className={focused ? styles.active__input : ""} />
         </form>
     );

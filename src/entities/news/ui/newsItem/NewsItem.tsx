@@ -4,11 +4,11 @@ import { Image, Subtitle, Title } from "@/shared/ui";
 
 import styles from "./styles.module.sass";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLLIElement> {
     news?: INews;
 }
 
-export function NewsItem({ news }: Props) {
+export function NewsItem({ news, ...props }: Props) {
     const color = useColor();
 
     return !news || Object.keys(news).length === 0 ? (
@@ -18,7 +18,7 @@ export function NewsItem({ news }: Props) {
             <ul className={styles.newsItem__tags}></ul>
         </li>
     ) : (
-        <li className={styles.newsItem}>
+        <li className={styles.newsItem} {...props}>
             <Image
                 className={styles.newsItem__image}
                 src={news ? news.image : "None"}
