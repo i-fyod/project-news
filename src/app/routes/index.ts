@@ -1,1 +1,1 @@
-export { router, newsRoute } from "./router";
+export { router, newsRoute, newsPostRoute } from "./router";
