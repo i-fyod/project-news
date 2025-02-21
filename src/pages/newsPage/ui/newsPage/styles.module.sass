@@ -1,0 +1,113 @@
+.newsPage
+    padding-bottom: 8rem
+    @media (width >= 1200px)
+        padding: 2rem calc((100% - 60rem) / 2)
+    @media (width >= 1366px)
+        padding: 2rem calc((100% - 80rem) / 2)
+
+    &__buttons
+        position: absolute
+        z-index: 1
+        width: 100%
+        display: flex
+        justify-content: space-between
+        @media (width >= 1200px)
+            width: 60rem
+        @media (width >= 1366px)
+            width: 80rem
+
+    &__image
+        backdrop-filter: brightness(.95)
+        @media (width >= 1200px)
+            border-radius: 2rem 2rem 0 0
+    
+    &__content
+        transform: translateY(-4rem)
+        margin-bottom: -4rem
+
+.imgContainer
+    height: 50vh
+    width: 100%
+    overflow: hidden
+    position: relative
+
+    &::before
+        content: ""
+        position: absolute
+        width: 100%
+        height: 100%
+        transform: scale(1.1)
+        background: var(--bg-image) center/cover no-repeat
+        filter: blur(10px) brightness(.75)
+
+    &__image
+        height: 100%
+        width: 100%
+        object-fit: contain
+        position: relative
+        transform: translateY(-2rem)
+
+.contentContainer
+    min-height: 50vh
+    background-color: var(--white-color)
+    border-radius: 4rem 4rem 0 0
+    @media (width >= 1200px)
+        border-radius: 4rem 4rem 2rem 2rem
+
+    &__title
+        min-height: 5rem
+        font-size: 3.2rem
+        margin-bottom: 2rem
+
+    &__author
+        margin-bottom: 2rem
+
+    &__text
+        height: 10rem
+        font-size: 1.5rem
+        font-weight: 400
+        line-height: 2.5rem
+        color: var(--black-color)
+
+.authorContainer
+    display: grid
+    grid-template-columns: 3.5rem 1fr 30%
+    gap: 1.5rem
+    align-items: center
+    border: .12rem solid var(--gray-color)
+    padding: 1rem 1.5rem
+    border-radius: 2rem
+
+    &__avatar
+        overflow: hidden
+        aspect-ratio: 1 / 1
+
+    &__link
+        position: relative
+        top: -.08rem
+        place-self: center end
+        color: var(--accent-color)
+        font-size: 1.2rem
+        font-weight: 500
+        cursor: pointer
+        @media (width >= 1366px)
+            font-size: 1.45rem
+
+.skeleton
+    div, p
+        border-radius: 1rem
+        background: linear-gradient(to right, rgba(130, 130, 130, 0.2) 8%, rgba(130, 130, 130, 0.3) 18%, rgba(130, 130, 130, 0.2) 33%)
+        background-size: 80rem 100rem
+        animation: wave-squares 2s infinite ease-out
+    
+    p
+        height: 2rem
+        width: 100%
+
+@keyframes wave-squares 
+    0% 
+        background-position: -46.8rem 0
+    
+    100% 
+        background-position: 46.8rem 0
+    

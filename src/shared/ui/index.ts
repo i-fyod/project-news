@@ -1,7 +1,9 @@
 export { Title } from "./title/Title";
 export { Subtitle } from "./subtitle/Subtitle";
-export { SearchBtn } from "./searchBtn/SearchBtn";
+export { Button } from "./button/Button";
 export { Image } from "./image/Image";
 export { Circle } from "./circle/Circle";
 export { Avatar } from "./avatar/Avatar";
 export { BearLogo } from "./bearLogo/BearLogo";
+export { SearchIcon } from "./icons/Icons";
+export { BackIcon } from "./icons/Icons";
