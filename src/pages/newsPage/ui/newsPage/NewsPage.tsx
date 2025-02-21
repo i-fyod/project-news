@@ -1,17 +1,17 @@
+import { newsPostRoute } from "@/app/routes";
+import { useNewsStore } from "@/app/store";
+
 import { useEffect } from "react";
 
 import { grayColor } from "@/shared/const";
 import { formatTimeAgo, useColor } from "@/shared/lib";
-import { INews } from "@/shared/types";
 import { BackIcon, Button, Subtitle, Title } from "@/shared/ui";
 
 import styles from "./styles.module.sass";
 
-interface Props {
-    news: INews;
-}
-
-export function NewsPage({ news }: Props) {
+export function NewsPage() {
+    const { postId } = newsPostRoute.useParams();
+    const news = useNewsStore().posts[postId];
     const color = useColor();
 
     useEffect(() => {
@@ -45,7 +45,7 @@ export function NewsPage({ news }: Props) {
     ) : (
         <div className={styles.newsPage}>
             <div className={`container ${styles.newsPage__buttons}`}>
-                <Button outline={true}>
+                <Button outline={true} onClick={() => window.history.back()}>
                     <BackIcon />
                 </Button>
             </div>
