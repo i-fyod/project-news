@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 
 import { Categories } from "@/entities/categories/ui";
 import { NewsItem } from "@/entities/news/ui";
@@ -13,6 +13,7 @@ import { INews } from "@/shared/types";
 import { Circle } from "@/shared/ui";
 
 import styles from "./styles.module.sass";
+import { useNewsStore } from "@/app/store";
 
 interface Props {
     visible?: number;
@@ -31,6 +32,9 @@ export function NewsList({ visible = 50 }: Props) {
 
     const news: INews[] = !isLoading && data ? data : new Array(visible).fill({});
 
+    const { addPost } = useNewsStore();
+    const navigate = useNavigate();
+
     return (
         <>
             <Categories selected={category} ref={categoriesRef} />
@@ -42,7 +46,14 @@ export function NewsList({ visible = 50 }: Props) {
                 <div className={styles.news}>
                     <ul className={styles.news__list}>
                         {news.slice(0, visible).map((item) => (
-                            <NewsItem news={item} />
+                            <NewsItem
+                                id={item.id}
+                                news={item}
+                                onClick={() => {
+                                    addPost(item);
+                                    navigate({ to: `/news/${item.id}` });
+                                }}
+                            />
                         ))}
                     </ul>
                 </div>

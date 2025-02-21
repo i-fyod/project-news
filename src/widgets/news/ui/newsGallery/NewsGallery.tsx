@@ -1,3 +1,7 @@
+import { useNewsStore } from "@/app/store";
+
+import { useNavigate } from "@tanstack/react-router";
+
 import { NewsCard } from "@/entities/news/ui";
 
 import { useLatestNews } from "@/widgets/news/api";
@@ -15,6 +19,9 @@ interface Props {
 
 export function NewsGallery({ visible = 10 }: Props) {
     document.documentElement.style.setProperty("--card-count", visible.toString());
+
+    const { addPost } = useNewsStore();
+    const navigate = useNavigate();
 
     const { data, isLoading, isFetching, isError, refetch } = useLatestNews();
     const news: INews[] = !isLoading && data ? data : new Array(visible).fill({});
@@ -41,7 +48,14 @@ export function NewsGallery({ visible = 10 }: Props) {
                     className={styles.slider__content}
                     style={{ transform: `translateX(${offset}rem)` }}>
                     {news.slice(0, visible).map((elem) => (
-                        <NewsCard key={elem.id} news={elem} />
+                        <NewsCard
+                            key={elem.id}
+                            news={elem}
+                            onClick={() => {
+                                addPost(elem);
+                                navigate({ to: `/news/${elem.id}` });
+                            }}
+                        />
                     ))}
                 </div>
             )}
