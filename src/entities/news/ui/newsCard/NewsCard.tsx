@@ -1,4 +1,4 @@
-import { formatTimeAgo } from "@/entities/news/lib";
+import { formatTimeAgo } from "@/shared/lib";
 
 import { useColor } from "@/shared/lib";
 import { INews } from "@/shared/types";
