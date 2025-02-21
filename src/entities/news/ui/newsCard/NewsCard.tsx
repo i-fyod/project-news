@@ -6,11 +6,11 @@ import { Image, Subtitle, Title } from "@/shared/ui";
 
 import styles from "./styles.module.sass";
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLLIElement> {
     news?: INews;
 }
 
-export function NewsCard({ news }: Props) {
+export function NewsCard({ news, ...props }: Props) {
     const color = useColor();
 
     return !news || Object.keys(news).length === 0 ? (
@@ -24,7 +24,7 @@ export function NewsCard({ news }: Props) {
             </div>
         </div>
     ) : (
-        <li className={styles.card}>
+        <li className={styles.card} {...props}>
             <Image className={styles.card__image} src={news ? news?.image : "None"} color={color} />
             <Title className={styles.card__title}>{news.title}</Title>
             <svg

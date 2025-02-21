@@ -1,4 +1,5 @@
 .newsPage
+    padding-bottom: 8rem
     @media (width >= 1200px)
         padding: 2rem calc((100% - 60rem) / 2)
     @media (width >= 1366px)
@@ -70,7 +71,7 @@
 
 .authorContainer
     display: grid
-    grid-template-columns: 3.5rem 1fr 1fr
+    grid-template-columns: 3.5rem 1fr 30%
     gap: 1.5rem
     align-items: center
     border: .12rem solid var(--gray-color)
@@ -82,6 +83,8 @@
         aspect-ratio: 1 / 1
 
     &__link
+        position: relative
+        top: -.08rem
         place-self: center end
         color: var(--accent-color)
         font-size: 1.2rem
