@@ -1,1 +1,1 @@
-export { Main } from "./Main/Main";
+export { Main } from "./main/Main";

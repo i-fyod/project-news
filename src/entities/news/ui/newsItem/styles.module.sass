@@ -2,7 +2,7 @@
     display: grid
     grid-template-columns: 7rem 1fr
     grid-template-rows: 60% 1fr
-    grid-template-areas: "img title" "img tags"
+    grid-template-areas: "img title icon" "img tags icon"
     gap: 1rem
     height: 9rem
     background-color: var(--white-color)
@@ -27,6 +27,7 @@
             text-wrap: nowrap
 
     &__tags
+        grid-area: tags
         display: flex
         gap: .5rem
         overflow: hidden
