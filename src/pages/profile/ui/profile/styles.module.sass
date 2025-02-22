@@ -1,13 +1,22 @@
 .profile
+    height: 100vh
+    padding-bottom: 8rem !important
+    display: grid
+    grid-template-rows: 13rem 3rem 1fr
+    grid-template-areas: "header" "description" "info"
+    @media (width >= 1200px)
+        padding-bottom: 3rem !important
     @media (width >= 1366px) 
         padding: 3rem calc((100% - 80rem) / 2) !important
     
     &__header
+        grid-area: header
         display: flex
         justify-content: space-between
         align-items: center
 
     &__description
+        grid-area: description
         font-size: 1.2rem
         color: var(--gray-color)
         @media (width >= 1366px) 
@@ -21,3 +30,10 @@
             @media (width >= 1366px) 
                 height: 2rem
                 top: .4rem
+
+    &__info
+        grid-area: info
+        place-self: end center
+        padding-bottom: 2rem
+        @media (width >= 1200px)
+            padding-bottom: 0

@@ -5,6 +5,7 @@ import { Switch } from "@/features/theme/ui";
 import { Subtitle } from "@/shared/ui";
 
 import styles from "./styles.module.sass";
+import { Info } from "@/entities/info/ui";
 
 export function Profile() {
     return (
@@ -29,6 +30,7 @@ export function Profile() {
                 Every piece of chocolate I ever ate is getting back at me.. desserts are very
                 revengeful..
             </Subtitle>
+            <Info className={styles.profile__info} />
         </div>
     );
 }
