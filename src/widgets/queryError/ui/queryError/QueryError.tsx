@@ -6,7 +6,7 @@ import styles from "./styles.module.sass";
 
 interface Props {
     children?: string;
-    refetch: () => void;
+    refetch?: () => void;
 }
 
 export function QueryError({ children, refetch }: Props) {
@@ -16,7 +16,7 @@ export function QueryError({ children, refetch }: Props) {
             <Subtitle className={styles.error__text}>
                 {children ? children : "Oops.. Something went wrong.."}
             </Subtitle>
-            <RefetchBtn refetch={() => refetch()} />
+            {refetch ? <RefetchBtn refetch={() => refetch()} /> : null}
         </div>
     );
 }

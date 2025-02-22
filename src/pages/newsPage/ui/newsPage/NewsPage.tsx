@@ -1,18 +1,26 @@
 import { newsPostRoute } from "@/app/routes";
 import { useNewsStore } from "@/app/store";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+import { useNavigate } from "@tanstack/react-router";
 
 import { grayColor } from "@/shared/const";
-import { formatTimeAgo, useColor } from "@/shared/lib";
+import { formatTimeAgo, useColor, useSavedNews } from "@/shared/lib";
 import { BackIcon, Button, Subtitle, Title } from "@/shared/ui";
+import { BookmarkIcon } from "@/shared/ui/icons/Icons";
 
 import styles from "./styles.module.sass";
 
 export function NewsPage() {
     const { postId } = newsPostRoute.useParams();
+    const navigate = useNavigate();
+
     const news = useNewsStore().posts[postId];
     const color = useColor();
+
+    const { addNews, removeNews, isSaved } = useSavedNews();
+    const [saved, setSaved] = useState(isSaved(news));
 
     useEffect(() => {
         if (news) {
@@ -24,7 +32,11 @@ export function NewsPage() {
     return !news || Object.keys(news).length === 0 ? (
         <div className={`${styles.newsPage} ${styles.skeleton}`}>
             <section className={`container ${styles.newsPage__buttons}`}>
-                <Button outline={true}>
+                <Button
+                    outline={true}
+                    onClick={() => {
+                        navigate({ to: "/news" });
+                    }}>
                     <BackIcon />
                 </Button>
             </section>
@@ -45,8 +57,24 @@ export function NewsPage() {
     ) : (
         <div className={styles.newsPage}>
             <div className={`container ${styles.newsPage__buttons}`}>
-                <Button outline={true} onClick={() => window.history.back()}>
+                <Button
+                    outline={true}
+                    onClick={() => {
+                        window.history.back();
+                    }}>
                     <BackIcon />
+                </Button>
+                <Button
+                    outline={true}
+                    onClick={() => {
+                        if (!saved) {
+                            addNews(news);
+                        } else {
+                            removeNews(news);
+                        }
+                        setSaved((prev) => !prev);
+                    }}>
+                    <BookmarkIcon filled={saved} />
                 </Button>
             </div>
             <div className={`${styles.newsPage__image} ${styles.imgContainer}`}>

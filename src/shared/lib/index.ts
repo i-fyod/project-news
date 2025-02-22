@@ -6,6 +6,7 @@ export { useColor } from "./hooks/useColor";
 export { useResolution } from "./hooks/useResolution";
 export { useDebounce } from "./hooks/useDebounce";
 export { useUrlParams } from "./hooks/useUrlParams";
+export { useSavedNews } from "./hooks/useSavedNews";
 
 export { ThemeContext } from "./context/theme/ThemeContext";
 export type { IThemeContext } from "./context/theme/ThemeContext";

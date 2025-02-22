@@ -1,5 +1,7 @@
 import { Main } from "@/pages/main/ui";
+import { NewsPage } from "@/pages/newsPage/ui";
 import { Profile } from "@/pages/profile/ui";
+import { Saved } from "@/pages/saved/ui";
 import { z } from "zod";
 
 import {
@@ -11,7 +13,6 @@ import {
 } from "@tanstack/react-router";
 
 import { Navigation } from "@/widgets/navigation/ui";
-import { NewsPage } from "@/pages/newsPage/ui";
 
 declare module "@tanstack/react-router" {
     interface Register {
@@ -98,6 +99,12 @@ export const newsPostRoute = createRoute({
     component: NewsPage,
 });
 
+export const savedRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: "saved",
+    component: Saved,
+});
+
 const profileRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: "profile",
@@ -113,5 +120,5 @@ const notFoundRoute = createRoute({
 });
 
 export const router = createRouter({
-    routeTree: rootRoute.addChildren([newsRoute, newsPostRoute, profileRoute, notFoundRoute]),
+    routeTree: rootRoute.addChildren([newsRoute, newsPostRoute, savedRoute, profileRoute, notFoundRoute]),
 });
