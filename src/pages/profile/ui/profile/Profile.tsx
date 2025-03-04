@@ -1,17 +1,27 @@
+import { useSettingsStore } from "@/app/store";
+
+import { Info } from "@/entities/info/ui";
 import { UserInfo } from "@/entities/user/ui";
 
 import { Switch } from "@/features/theme/ui";
 
+import { Settings } from "@/widgets/panels/ui";
+
 import { Subtitle } from "@/shared/ui";
 
 import styles from "./styles.module.sass";
-import { Info } from "@/entities/info/ui";
 
 export function Profile() {
+    const { profile, description } = useSettingsStore();
+
     return (
         <div className={`container ${styles.profile}`}>
             <header className={styles.profile__header}>
-                <UserInfo bigAvatar={true} title="Personal Profile" subtitle="Author & writer" />
+                <UserInfo
+                    bigAvatar={true}
+                    title={profile || "Personal Profile"}
+                    subtitle="Author & writer"
+                />
                 <Switch />
             </header>
             <Subtitle className={styles.profile__description}>
@@ -27,9 +37,12 @@ export function Profile() {
                             id="🎨-Color"></path>
                     </g>
                 </svg>
-                Every piece of chocolate I ever ate is getting back at me.. desserts are very
-                revengeful..
+                {description ||
+                    "Every piece of chocolate I ever ate is getting back at me.. desserts are very revengeful.. "}
             </Subtitle>
+            <section className={styles.profile__panels}>
+                <Settings />
+            </section>
             <Info className={styles.profile__info} />
         </div>
     );
