@@ -1,0 +1,31 @@
+.panel
+    background-color: var(--white-color)
+    width: 100%
+    min-height: 5rem
+    display: grid
+    grid-template-columns: 5rem 1fr
+    grid-template-rows: 5rem 1fr
+    grid-template-areas: "sidebar title" "sidebar content" 
+    column-gap: 1.5rem
+    border-radius: 2rem
+    box-shadow: var(--box-shadow)
+    padding-right: 2rem
+    cursor: pointer
+
+    &__sidebar
+        grid-area: sidebar
+        height: 100%
+        width: 5rem
+        aspect-ratio: auto
+        
+    &__title
+        grid-area: title
+        place-self: center left
+        font-weight: 600
+    
+    &__content
+        padding-bottom: 2rem
+        display: none
+
+        &_opened
+            display: block    
