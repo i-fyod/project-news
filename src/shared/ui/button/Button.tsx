@@ -1,6 +1,6 @@
 import styles from "./styles.module.sass";
 
-interface Props extends React.HTMLAttributes<HTMLButtonElement> {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     className?: string;
     outline?: boolean;
     children: React.ReactNode;

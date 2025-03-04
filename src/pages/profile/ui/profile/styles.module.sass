@@ -2,8 +2,8 @@
     height: 100vh
     padding-bottom: 8rem !important
     display: grid
-    grid-template-rows: 13rem 3rem 1fr
-    grid-template-areas: "header" "description" "info"
+    grid-template-rows: 13rem 3rem 1fr 2rem
+    grid-template-areas: "header" "description" "panels" "info"
     @media (width >= 1200px)
         padding-bottom: 3rem !important
     @media (width >= 1366px) 
@@ -17,6 +17,9 @@
 
     &__description
         grid-area: description
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
         font-size: 1.2rem
         color: var(--gray-color)
         @media (width >= 1366px) 
@@ -37,3 +40,7 @@
         padding-bottom: 2rem
         @media (width >= 1200px)
             padding-bottom: 0
+    
+    &__panels
+        grid-area: panels
+        padding: 3rem 0

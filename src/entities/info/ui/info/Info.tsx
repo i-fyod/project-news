@@ -43,7 +43,7 @@ export function Info({ className }: Props) {
                             strokeLinecap="round"></path>
                     </g>
                 </svg>
-                4.0.3 | by i_fyod
+                4.0.4 | by i_fyod
             </Subtitle>
         </div>
     );
