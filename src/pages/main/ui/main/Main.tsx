@@ -26,7 +26,7 @@ export function Main() {
             <div className={`container ${styles.mainPage__header}`}>
                 <UserInfo
                     hidden={focused}
-                    title={`Welcome${localStorage.getItem("name") ? `, ${localStorage.getItem("name")}` : "back"}!`}
+                    title={`Welcome${localStorage.getItem("name") ? `, ${localStorage.getItem("name")}` : " back"}!`}
                     subtitle={formatDate(new Date())}
                 />
                 <search className={focused ? styles.search : ""} role="search">
